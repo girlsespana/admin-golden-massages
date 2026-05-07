@@ -1,0 +1,1 @@
+export const MY_TABLE_ROW_HEIGHT = 50

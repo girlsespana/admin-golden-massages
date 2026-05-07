@@ -1,0 +1,1 @@
+export const GRAPHQL_PAGE_SIZE = parseInt(import.meta.env.VITE_GRAPHQL_DEFAULT_PAGE_SIZE ?? 20)

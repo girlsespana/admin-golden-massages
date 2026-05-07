@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+/* ============================================
+   GOLDENMASAJES - Design Tokens (Tailwind v4)
+   ============================================ */
+@theme {
+  /* Colors */
+  --color-primary: #D4AF37;
+  --color-background-light: #F9FAFB;
+  --color-background-dark: #0A0A0B;
+  --color-card-dark: #161618;
+
+  /* Font family */
+  --font-family-sans: 'Inter', sans-serif;
+
+  /* Border radius */
+  --color-radius: 0.75rem;
+}
+
+/* ============================================
+   GOLDENMASAJES - Dark Theme
+   ============================================ */
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gold-gradient-bg {
+    background: radial-gradient(circle at center, rgba(245, 158, 11, 0.15) 0%, rgba(10, 10, 11, 0) 70%);
+  }
+
+  /* Gold metallic gradient for text */
+  .text-gold-gradient {
+    background: linear-gradient(to bottom, #CFB53B 0%, #F1E5AC 26%, #D4AF37 45%, #8A6E2F 61%, #D4AF37 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Gold metallic gradient for backgrounds */
+  .bg-gold-gradient {
+    background: linear-gradient(to bottom, #CFB53B 0%, #F1E5AC 26%, #D4AF37 45%, #8A6E2F 61%, #D4AF37 100%);
+  }
+
+  /* Gold metallic gradient for backgrounds (diagonal) */
+  .bg-gold-gradient-br {
+    background: linear-gradient(to bottom right, #CFB53B 0%, #F1E5AC 26%, #D4AF37 45%, #8A6E2F 61%, #D4AF37 100%);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0A0A0B;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #D4AF37;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #CFB53B;
+  }
+}
+
+@layer components {
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Card dark background color */
+.bg-card-dark {
+  background-color: #171717;
+}

@@ -1,0 +1,55 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      // constants
+      "@constants": ["src/constants/index"],
+      // contexts
+      "@contexts/*": ["src/contexts/*"],
+      // Atoms
+      "@atoms": ["src/atoms/index"],
+      // Components
+      "@components": ["src/components/index"],
+      // Hooks
+      "@hooks": ["src/hooks/index"],
+      // Layouts
+      "@auth-lay/*": ["src/layouts/auth/*"],
+      "@dash-lay/*": ["src/layouts/dashboard/*"],
+      // Snippets
+      "@snippets/*": ["src/snippets/*"],
+      // GraphQL
+      "@gql": ["src/gql/index"],
+      "@types": ["src/gql/graphql"],
+      // Modules
+      "@auth/*": ["src/modules/auth/*"],
+      "@home/*": ["src/modules/home/*"],
+      "@clients/*": ["src/modules/clients/*"],
+      "@orders/*": ["src/modules/orders/*"],
+      "@restaurants/*": ["src/modules/restaurants/*"],
+    },
+    "target": "ES2020",
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": false,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "jsx": "react-jsx",
+    "strict": true,
+    "useDefineForClassFields": true,
+    "noEmit": true
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
