@@ -27,10 +27,6 @@ const ModelsQuery = graphql(`
                         name
                         email
                     }
-                    city{
-                        id
-                        name
-                    }
                     images {
                         id
                         imageUrl

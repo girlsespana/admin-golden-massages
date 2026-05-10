@@ -28,19 +28,11 @@ export type Scalars = {
   Int: { input: number; output: number };
   Float: { input: number; output: number };
   /**
-   * The `BigInt` scalar type represents non-fractional whole numeric values.
-   * `BigInt` is not constrained to 32-bit like the `Int` type and thus is a less
-   * compatible type.
-   */
-  BigInt: { input: any; output: any };
-  /**
    * The `DateTime` scalar type represents a DateTime
    * value as specified by
    * [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
    */
   DateTime: { input: any; output: any };
-  /** The `Decimal` scalar type represents a python Decimal. */
-  Decimal: { input: any; output: any };
   /**
    * The `GenericScalar` scalar type represents a generic
    * GraphQL scalar value that could be:
@@ -59,81 +51,15 @@ export enum AccountsUserPhoneTypeChoices {
   Whatsapp = "WHATSAPP",
 }
 
-/** An enumeration. */
-export enum AccountsUserTypeChoices {
-  /** Agency */
-  Agency = "AGENCY",
-  /** Independent */
-  Independent = "INDEPENDENT",
-}
-
 export type ActivateModelInput = {
   clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
-  days: ModelActivationDays;
   modelId: Scalars["String"]["input"];
-  rangeType: ModelRangeType;
 };
 
 export type ActivateModelPayload = {
   __typename?: "ActivateModelPayload";
   clientMutationId?: Maybe<Scalars["String"]["output"]>;
   model?: Maybe<ModelNode>;
-};
-
-/** An enumeration. */
-export enum AdsBannerCategoryChoices {
-  /** Home */
-  Home = "HOME",
-  /** Regular */
-  Regular = "REGULAR",
-  /** Top */
-  Top = "TOP",
-  /** Top 2 */
-  Top2 = "TOP2",
-  /** Vip */
-  Vip = "VIP",
-}
-
-/** An enumeration. */
-export enum BannerCategoryType {
-  Home = "HOME",
-  Regular = "REGULAR",
-  Top = "TOP",
-  Top2 = "TOP2",
-  Vip = "VIP",
-}
-
-export type BannerNode = Node & {
-  __typename?: "BannerNode";
-  action?: Maybe<Scalars["String"]["output"]>;
-  category: AdsBannerCategoryChoices;
-  city?: Maybe<CityNode>;
-  created: Scalars["DateTime"]["output"];
-  /** The ID of the object */
-  id: Scalars["ID"]["output"];
-  isActive: Scalars["Boolean"]["output"];
-  mobileUrl: Scalars["String"]["output"];
-  position?: Maybe<Scalars["Int"]["output"]>;
-  title: Scalars["String"]["output"];
-  updated: Scalars["DateTime"]["output"];
-  url: Scalars["String"]["output"];
-};
-
-export type BannerNodeConnection = {
-  __typename?: "BannerNodeConnection";
-  /** Contains the nodes in this connection. */
-  edges: Array<Maybe<BannerNodeEdge>>;
-  /** Pagination data for this connection. */
-  pageInfo: PageInfo;
-};
-
-/** A Relay edge containing a `BannerNode` and its cursor. */
-export type BannerNodeEdge = {
-  __typename?: "BannerNodeEdge";
-  /** A cursor for use in pagination */
-  cursor: Scalars["String"]["output"];
-  /** The item at the end of the edge */
-  node?: Maybe<BannerNode>;
 };
 
 export type ChangePasswordInput = {
@@ -146,130 +72,6 @@ export type ChangePasswordPayload = {
   __typename?: "ChangePasswordPayload";
   clientMutationId?: Maybe<Scalars["String"]["output"]>;
   user?: Maybe<UserNode>;
-};
-
-export type CityNode = Node & {
-  __typename?: "CityNode";
-  alternateNames?: Maybe<Scalars["String"]["output"]>;
-  banners: BannerNodeConnection;
-  displayName: Scalars["String"]["output"];
-  featureCode?: Maybe<Scalars["String"]["output"]>;
-  geonameId?: Maybe<Scalars["Int"]["output"]>;
-  /** The ID of the object */
-  id: Scalars["ID"]["output"];
-  latitude?: Maybe<Scalars["Decimal"]["output"]>;
-  longitude?: Maybe<Scalars["Decimal"]["output"]>;
-  models: ModelNodeConnection;
-  name: Scalars["String"]["output"];
-  nameAscii: Scalars["String"]["output"];
-  population?: Maybe<Scalars["BigInt"]["output"]>;
-  region?: Maybe<RegionNode>;
-  searchNames: Scalars["String"]["output"];
-  slug: Scalars["String"]["output"];
-  timezone?: Maybe<Scalars["String"]["output"]>;
-  userSet: UserNodeConnection;
-};
-
-export type CityNodeBannersArgs = {
-  after?: InputMaybe<Scalars["String"]["input"]>;
-  before?: InputMaybe<Scalars["String"]["input"]>;
-  category?: InputMaybe<AdsBannerCategoryChoices>;
-  city?: InputMaybe<Scalars["ID"]["input"]>;
-  first?: InputMaybe<Scalars["Int"]["input"]>;
-  isActive?: InputMaybe<Scalars["Boolean"]["input"]>;
-  last?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
-};
-
-export type CityNodeModelsArgs = {
-  activationDate_Gt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  activationDate_Gte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  activationDate_Lt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  activationDate_Lte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  after?: InputMaybe<Scalars["String"]["input"]>;
-  age_Gte?: InputMaybe<Scalars["Int"]["input"]>;
-  age_Lte?: InputMaybe<Scalars["Int"]["input"]>;
-  attributes?: InputMaybe<Scalars["String"]["input"]>;
-  before?: InputMaybe<Scalars["String"]["input"]>;
-  boobs?: InputMaybe<Scalars["Boolean"]["input"]>;
-  city?: InputMaybe<Scalars["ID"]["input"]>;
-  createdAt_Gt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  createdAt_Gte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  createdAt_Lt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  createdAt_Lte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  eyesColor?: InputMaybe<ModelsModelEyesColorChoices>;
-  first?: InputMaybe<Scalars["Int"]["input"]>;
-  gender?: InputMaybe<ModelsModelGenderChoices>;
-  globalSearch?: InputMaybe<Scalars["String"]["input"]>;
-  hairColor?: InputMaybe<ModelsModelHairColorChoices>;
-  hasVideos?: InputMaybe<Scalars["Boolean"]["input"]>;
-  id?: InputMaybe<Scalars["String"]["input"]>;
-  isActive?: InputMaybe<Scalars["Boolean"]["input"]>;
-  isFeatured?: InputMaybe<Scalars["Boolean"]["input"]>;
-  isVerified?: InputMaybe<Scalars["Boolean"]["input"]>;
-  languages?: InputMaybe<Scalars["String"]["input"]>;
-  last?: InputMaybe<Scalars["Int"]["input"]>;
-  name_Icontains?: InputMaybe<Scalars["String"]["input"]>;
-  nationality?: InputMaybe<ModelsModelNationalityChoices>;
-  nonVisibleServices?: InputMaybe<Scalars["String"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
-  orderBy?: InputMaybe<Scalars["String"]["input"]>;
-  party?: InputMaybe<Scalars["Boolean"]["input"]>;
-  piercings?: InputMaybe<Scalars["Boolean"]["input"]>;
-  rangeType?: InputMaybe<ModelsModelRangeTypeChoices>;
-  service_Modes?: InputMaybe<Scalars["String"]["input"]>;
-  services?: InputMaybe<Scalars["String"]["input"]>;
-  smoker?: InputMaybe<Scalars["Boolean"]["input"]>;
-  tattoos?: InputMaybe<Scalars["Boolean"]["input"]>;
-  updatedAt_Gt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  updatedAt_Gte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  updatedAt_Lt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  updatedAt_Lte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  user_Id?: InputMaybe<Scalars["String"]["input"]>;
-  user_Type?: InputMaybe<Scalars["String"]["input"]>;
-};
-
-export type CityNodeUserSetArgs = {
-  after?: InputMaybe<Scalars["String"]["input"]>;
-  before?: InputMaybe<Scalars["String"]["input"]>;
-  first?: InputMaybe<Scalars["Int"]["input"]>;
-  last?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
-};
-
-export type CityNodeConnection = {
-  __typename?: "CityNodeConnection";
-  /** Contains the nodes in this connection. */
-  edges: Array<Maybe<CityNodeEdge>>;
-  /** Pagination data for this connection. */
-  pageInfo: PageInfo;
-};
-
-/** A Relay edge containing a `CityNode` and its cursor. */
-export type CityNodeEdge = {
-  __typename?: "CityNodeEdge";
-  /** A cursor for use in pagination */
-  cursor: Scalars["String"]["output"];
-  /** The item at the end of the edge */
-  node?: Maybe<CityNode>;
-};
-
-export type CreateBannerInput = {
-  action: Scalars["String"]["input"];
-  category: BannerCategoryType;
-  cityId: Scalars["String"]["input"];
-  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
-  isActive: Scalars["Boolean"]["input"];
-  mobileUrl: Scalars["String"]["input"];
-  position?: InputMaybe<Scalars["Int"]["input"]>;
-  title: Scalars["String"]["input"];
-  url: Scalars["String"]["input"];
-};
-
-export type CreateBannerPayload = {
-  __typename?: "CreateBannerPayload";
-  banner?: Maybe<BannerNode>;
-  clientMutationId?: Maybe<Scalars["String"]["output"]>;
 };
 
 export type CreateModelInput = {
@@ -293,7 +95,6 @@ export type CreateModelInput = {
   piercings: Scalars["Boolean"]["input"];
   services: Array<InputMaybe<ModelServices>>;
   tattoos: Scalars["Boolean"]["input"];
-  verificationImage: Scalars["String"]["input"];
   videos: Array<InputMaybe<Scalars["String"]["input"]>>;
   weight: Scalars["Int"]["input"];
 };
@@ -302,22 +103,6 @@ export type CreateModelPayload = {
   __typename?: "CreateModelPayload";
   clientMutationId?: Maybe<Scalars["String"]["output"]>;
   model?: Maybe<ModelNode>;
-};
-
-export type CreateUserInput = {
-  acceptHiddenCalls?: InputMaybe<Scalars["Boolean"]["input"]>;
-  cityId: Scalars["String"]["input"];
-  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
-  email: Scalars["String"]["input"];
-  name: Scalars["String"]["input"];
-  password: Scalars["String"]["input"];
-  phoneNumbers: Array<InputMaybe<UserPhoneInputType>>;
-};
-
-export type CreateUserPayload = {
-  __typename?: "CreateUserPayload";
-  clientMutationId?: Maybe<Scalars["String"]["output"]>;
-  user?: Maybe<UserNode>;
 };
 
 export type DeactivateModelInput = {
@@ -331,17 +116,6 @@ export type DeactivateModelPayload = {
   model?: Maybe<ModelNode>;
 };
 
-export type DeleteBannerInput = {
-  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
-  id: Scalars["String"]["input"];
-};
-
-export type DeleteBannerPayload = {
-  __typename?: "DeleteBannerPayload";
-  clientMutationId?: Maybe<Scalars["String"]["output"]>;
-  success?: Maybe<Scalars["Boolean"]["output"]>;
-};
-
 export type DeleteModelInput = {
   clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
   modelId: Scalars["String"]["input"];
@@ -351,25 +125,6 @@ export type DeleteModelPayload = {
   __typename?: "DeleteModelPayload";
   clientMutationId?: Maybe<Scalars["String"]["output"]>;
   success?: Maybe<Scalars["Boolean"]["output"]>;
-};
-
-export type EditBannerInput = {
-  action: Scalars["String"]["input"];
-  category: BannerCategoryType;
-  cityId: Scalars["String"]["input"];
-  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
-  id: Scalars["String"]["input"];
-  isActive: Scalars["Boolean"]["input"];
-  mobileUrl: Scalars["String"]["input"];
-  position?: InputMaybe<Scalars["Int"]["input"]>;
-  title: Scalars["String"]["input"];
-  url: Scalars["String"]["input"];
-};
-
-export type EditBannerPayload = {
-  __typename?: "EditBannerPayload";
-  banner?: Maybe<BannerNode>;
-  clientMutationId?: Maybe<Scalars["String"]["output"]>;
 };
 
 export type EditModelInput = {
@@ -394,7 +149,6 @@ export type EditModelInput = {
   piercings: Scalars["Boolean"]["input"];
   services: Array<InputMaybe<ModelServices>>;
   tattoos: Scalars["Boolean"]["input"];
-  verificationImage: Scalars["String"]["input"];
   videos?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
   weight: Scalars["Int"]["input"];
 };
@@ -404,24 +158,6 @@ export type EditModelPayload = {
   clientMutationId?: Maybe<Scalars["String"]["output"]>;
   model?: Maybe<ModelNode>;
 };
-
-export type FeaturedModelInput = {
-  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
-  modelId: Scalars["String"]["input"];
-};
-
-export type FeaturedModelPayload = {
-  __typename?: "FeaturedModelPayload";
-  clientMutationId?: Maybe<Scalars["String"]["output"]>;
-  model?: Maybe<ModelNode>;
-};
-
-/** An enumeration. */
-export enum ModelActivationDays {
-  FifteenDays = "FIFTEEN_DAYS",
-  SevenDays = "SEVEN_DAYS",
-  ThirtyDays = "THIRTY_DAYS",
-}
 
 /** An enumeration. */
 export enum ModelAttributes {
@@ -731,18 +467,14 @@ export enum ModelNationality {
 export type ModelNode = Node & {
   __typename?: "ModelNode";
   activationDate?: Maybe<Scalars["DateTime"]["output"]>;
-  activeSubscription?: Maybe<ModelSubscriptionNode>;
   age: Scalars["Int"]["output"];
   /** Selecciona los atributos disponibles */
   attributes: Array<Maybe<Scalars["String"]["output"]>>;
   boobs: Scalars["Boolean"]["output"];
-  city: CityNode;
   createdAt: Scalars["DateTime"]["output"];
   description?: Maybe<Scalars["String"]["output"]>;
-  expirationDate?: Maybe<Scalars["String"]["output"]>;
   eyesColor: ModelsModelEyesColorChoices;
   featuredDate?: Maybe<Scalars["DateTime"]["output"]>;
-  featuredExpirationDate?: Maybe<Scalars["String"]["output"]>;
   gender: ModelsModelGenderChoices;
   hairColor: ModelsModelHairColorChoices;
   height?: Maybe<Scalars["Int"]["output"]>;
@@ -765,17 +497,11 @@ export type ModelNode = Node & {
   serviceModes: Array<Maybe<Scalars["String"]["output"]>>;
   services?: Maybe<Array<Maybe<ModelServices>>>;
   smoker: Scalars["Boolean"]["output"];
-  subscriptions?: Maybe<Array<Maybe<ModelSubscriptionNode>>>;
   tattoos: Scalars["Boolean"]["output"];
   updatedAt: Scalars["DateTime"]["output"];
   user: UserNode;
-  verificationImages?: Maybe<VerificationModelImageNode>;
   videos?: Maybe<Array<Maybe<ModelVideoNode>>>;
   weight?: Maybe<Scalars["Int"]["output"]>;
-};
-
-export type ModelNodeActiveSubscriptionArgs = {
-  id: Scalars["ID"]["input"];
 };
 
 export type ModelNodeConnection = {
@@ -826,13 +552,6 @@ export enum ModelNonVisibleServices {
 }
 
 /** An enumeration. */
-export enum ModelRangeType {
-  Regular = "REGULAR",
-  Top = "TOP",
-  Vip = "VIP",
-}
-
-/** An enumeration. */
 export enum ModelServices {
   CouplesService = "COUPLES_SERVICE",
   Dancing = "DANCING",
@@ -853,36 +572,6 @@ export enum ModelServices {
   Travel = "TRAVEL",
   WeekendGetaway = "WEEKEND_GETAWAY",
 }
-
-export type ModelSubscriptionNode = Node & {
-  __typename?: "ModelSubscriptionNode";
-  createdAt: Scalars["DateTime"]["output"];
-  daysPurchased: Scalars["Int"]["output"];
-  endDate: Scalars["DateTime"]["output"];
-  /** The ID of the object */
-  id: Scalars["ID"]["output"];
-  isActive: Scalars["Boolean"]["output"];
-  model: ModelNode;
-  rangeType: ModelsModelSubscriptionRangeTypeChoices;
-  startDate: Scalars["DateTime"]["output"];
-};
-
-export type ModelSubscriptionNodeConnection = {
-  __typename?: "ModelSubscriptionNodeConnection";
-  /** Contains the nodes in this connection. */
-  edges: Array<Maybe<ModelSubscriptionNodeEdge>>;
-  /** Pagination data for this connection. */
-  pageInfo: PageInfo;
-};
-
-/** A Relay edge containing a `ModelSubscriptionNode` and its cursor. */
-export type ModelSubscriptionNodeEdge = {
-  __typename?: "ModelSubscriptionNodeEdge";
-  /** A cursor for use in pagination */
-  cursor: Scalars["String"]["output"];
-  /** The item at the end of the edge */
-  node?: Maybe<ModelSubscriptionNode>;
-};
 
 export type ModelVideoNode = Node & {
   __typename?: "ModelVideoNode";
@@ -1426,33 +1115,17 @@ export enum ModelsModelRangeTypeChoices {
   Vip = "VIP",
 }
 
-/** An enumeration. */
-export enum ModelsModelSubscriptionRangeTypeChoices {
-  /** Regular */
-  Regular = "REGULAR",
-  /** Top */
-  Top = "TOP",
-  /** Vip */
-  Vip = "VIP",
-}
-
 export type Mutation = {
   __typename?: "Mutation";
   activateModel?: Maybe<ActivateModelPayload>;
   changePassword?: Maybe<ChangePasswordPayload>;
-  createBanner?: Maybe<CreateBannerPayload>;
   createModel?: Maybe<CreateModelPayload>;
-  createUser?: Maybe<CreateUserPayload>;
   deactivateModel?: Maybe<DeactivateModelPayload>;
-  deleteBanner?: Maybe<DeleteBannerPayload>;
   deleteModel?: Maybe<DeleteModelPayload>;
-  editBanner?: Maybe<EditBannerPayload>;
   editModel?: Maybe<EditModelPayload>;
-  featuredModel?: Maybe<FeaturedModelPayload>;
   refreshToken?: Maybe<Refresh>;
   tokenAuth?: Maybe<ObtainJsonWebTokenPayload>;
   updateUser?: Maybe<UpdateUserPayload>;
-  verifiedModel?: Maybe<VerifiedModelPayload>;
   verifyToken?: Maybe<Verify>;
 };
 
@@ -1464,40 +1137,20 @@ export type MutationChangePasswordArgs = {
   input: ChangePasswordInput;
 };
 
-export type MutationCreateBannerArgs = {
-  input: CreateBannerInput;
-};
-
 export type MutationCreateModelArgs = {
   input: CreateModelInput;
-};
-
-export type MutationCreateUserArgs = {
-  input: CreateUserInput;
 };
 
 export type MutationDeactivateModelArgs = {
   input: DeactivateModelInput;
 };
 
-export type MutationDeleteBannerArgs = {
-  input: DeleteBannerInput;
-};
-
 export type MutationDeleteModelArgs = {
   input: DeleteModelInput;
 };
 
-export type MutationEditBannerArgs = {
-  input: EditBannerInput;
-};
-
 export type MutationEditModelArgs = {
   input: EditModelInput;
-};
-
-export type MutationFeaturedModelArgs = {
-  input: FeaturedModelInput;
 };
 
 export type MutationRefreshTokenArgs = {
@@ -1510,10 +1163,6 @@ export type MutationTokenAuthArgs = {
 
 export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
-};
-
-export type MutationVerifiedModelArgs = {
-  input: VerifiedModelInput;
 };
 
 export type MutationVerifyTokenArgs = {
@@ -1563,60 +1212,13 @@ export enum PhoneType {
 
 export type Query = {
   __typename?: "Query";
-  banners?: Maybe<BannerNodeConnection>;
-  cities?: Maybe<CityNodeConnection>;
-  city?: Maybe<CityNode>;
-  femaleCities?: Maybe<Array<Maybe<CityNode>>>;
   me?: Maybe<UserNode>;
   model?: Maybe<ModelNode>;
-  modelSubscription?: Maybe<ModelSubscriptionNode>;
-  modelSubscriptions?: Maybe<ModelSubscriptionNodeConnection>;
   models?: Maybe<ModelNodeConnection>;
-  region?: Maybe<RegionNode>;
-  regions?: Maybe<RegionNodeConnection>;
-  transCities?: Maybe<Array<Maybe<CityNode>>>;
-};
-
-export type QueryBannersArgs = {
-  after?: InputMaybe<Scalars["String"]["input"]>;
-  before?: InputMaybe<Scalars["String"]["input"]>;
-  category?: InputMaybe<AdsBannerCategoryChoices>;
-  city?: InputMaybe<Scalars["ID"]["input"]>;
-  first?: InputMaybe<Scalars["Int"]["input"]>;
-  isActive?: InputMaybe<Scalars["Boolean"]["input"]>;
-  last?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
-};
-
-export type QueryCitiesArgs = {
-  after?: InputMaybe<Scalars["String"]["input"]>;
-  before?: InputMaybe<Scalars["String"]["input"]>;
-  first?: InputMaybe<Scalars["Int"]["input"]>;
-  last?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
-  regionId?: InputMaybe<Scalars["String"]["input"]>;
-  searchNames?: InputMaybe<Scalars["String"]["input"]>;
-  searchNames_Icontains?: InputMaybe<Scalars["String"]["input"]>;
-};
-
-export type QueryCityArgs = {
-  id: Scalars["ID"]["input"];
 };
 
 export type QueryModelArgs = {
   id: Scalars["ID"]["input"];
-};
-
-export type QueryModelSubscriptionArgs = {
-  id: Scalars["ID"]["input"];
-};
-
-export type QueryModelSubscriptionsArgs = {
-  after?: InputMaybe<Scalars["String"]["input"]>;
-  before?: InputMaybe<Scalars["String"]["input"]>;
-  first?: InputMaybe<Scalars["Int"]["input"]>;
-  last?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
 export type QueryModelsArgs = {
@@ -1667,67 +1269,11 @@ export type QueryModelsArgs = {
   user_Type?: InputMaybe<Scalars["String"]["input"]>;
 };
 
-export type QueryRegionArgs = {
-  id: Scalars["ID"]["input"];
-};
-
-export type QueryRegionsArgs = {
-  after?: InputMaybe<Scalars["String"]["input"]>;
-  before?: InputMaybe<Scalars["String"]["input"]>;
-  first?: InputMaybe<Scalars["Int"]["input"]>;
-  last?: InputMaybe<Scalars["Int"]["input"]>;
-  name?: InputMaybe<Scalars["String"]["input"]>;
-  name_Icontains?: InputMaybe<Scalars["String"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
-};
-
 export type Refresh = {
   __typename?: "Refresh";
   payload: Scalars["GenericScalar"]["output"];
   refreshExpiresIn: Scalars["Int"]["output"];
   token: Scalars["String"]["output"];
-};
-
-export type RegionNode = Node & {
-  __typename?: "RegionNode";
-  alternateNames?: Maybe<Scalars["String"]["output"]>;
-  citySet: CityNodeConnection;
-  displayName: Scalars["String"]["output"];
-  geonameCode?: Maybe<Scalars["String"]["output"]>;
-  geonameId?: Maybe<Scalars["Int"]["output"]>;
-  /** The ID of the object */
-  id: Scalars["ID"]["output"];
-  name: Scalars["String"]["output"];
-  nameAscii: Scalars["String"]["output"];
-  slug: Scalars["String"]["output"];
-};
-
-export type RegionNodeCitySetArgs = {
-  after?: InputMaybe<Scalars["String"]["input"]>;
-  before?: InputMaybe<Scalars["String"]["input"]>;
-  first?: InputMaybe<Scalars["Int"]["input"]>;
-  last?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
-  regionId?: InputMaybe<Scalars["String"]["input"]>;
-  searchNames?: InputMaybe<Scalars["String"]["input"]>;
-  searchNames_Icontains?: InputMaybe<Scalars["String"]["input"]>;
-};
-
-export type RegionNodeConnection = {
-  __typename?: "RegionNodeConnection";
-  /** Contains the nodes in this connection. */
-  edges: Array<Maybe<RegionNodeEdge>>;
-  /** Pagination data for this connection. */
-  pageInfo: PageInfo;
-};
-
-/** A Relay edge containing a `RegionNode` and its cursor. */
-export type RegionNodeEdge = {
-  __typename?: "RegionNodeEdge";
-  /** A cursor for use in pagination */
-  cursor: Scalars["String"]["output"];
-  /** The item at the end of the edge */
-  node?: Maybe<RegionNode>;
 };
 
 export type UpdateUserInput = {
@@ -1748,10 +1294,6 @@ export type UpdateUserPayload = {
 
 export type UserNode = Node & {
   __typename?: "UserNode";
-  acceptHiddenCalls: Scalars["Boolean"]["output"];
-  activeTransModels?: Maybe<Scalars["Int"]["output"]>;
-  activeWomanModels?: Maybe<Scalars["Int"]["output"]>;
-  city?: Maybe<CityNode>;
   created: Scalars["DateTime"]["output"];
   email: Scalars["String"]["output"];
   /** The ID of the object */
@@ -1762,14 +1304,10 @@ export type UserNode = Node & {
   isSuperuser: Scalars["Boolean"]["output"];
   lastLogin?: Maybe<Scalars["DateTime"]["output"]>;
   models: ModelNodeConnection;
-  modelsQty?: Maybe<Scalars["Int"]["output"]>;
   name: Scalars["String"]["output"];
   password: Scalars["String"]["output"];
   phoneNumbers: UserPhoneNodeConnection;
-  type?: Maybe<AccountsUserTypeChoices>;
   updated: Scalars["DateTime"]["output"];
-  verifiedModels?: Maybe<Scalars["Int"]["output"]>;
-  website: Scalars["String"]["output"];
 };
 
 export type UserNodeModelsArgs = {
@@ -1828,23 +1366,6 @@ export type UserNodePhoneNumbersArgs = {
   offset?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
-export type UserNodeConnection = {
-  __typename?: "UserNodeConnection";
-  /** Contains the nodes in this connection. */
-  edges: Array<Maybe<UserNodeEdge>>;
-  /** Pagination data for this connection. */
-  pageInfo: PageInfo;
-};
-
-/** A Relay edge containing a `UserNode` and its cursor. */
-export type UserNodeEdge = {
-  __typename?: "UserNodeEdge";
-  /** A cursor for use in pagination */
-  cursor: Scalars["String"]["output"];
-  /** The item at the end of the edge */
-  node?: Maybe<UserNode>;
-};
-
 export type UserPhoneInputType = {
   countryCode: Scalars["String"]["input"];
   phone: Scalars["String"]["input"];
@@ -1878,25 +1399,6 @@ export type UserPhoneNodeEdge = {
   node?: Maybe<UserPhoneNode>;
 };
 
-export type VerificationModelImageNode = Node & {
-  __typename?: "VerificationModelImageNode";
-  /** The ID of the object */
-  id: Scalars["ID"]["output"];
-  imageUrl?: Maybe<Scalars["String"]["output"]>;
-  model: ModelNode;
-};
-
-export type VerifiedModelInput = {
-  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
-  modelId: Scalars["String"]["input"];
-};
-
-export type VerifiedModelPayload = {
-  __typename?: "VerifiedModelPayload";
-  clientMutationId?: Maybe<Scalars["String"]["output"]>;
-  model?: Maybe<ModelNode>;
-};
-
 export type Verify = {
   __typename?: "Verify";
   payload: Scalars["GenericScalar"]["output"];
@@ -1927,13 +1429,7 @@ export type MeQuery = {
     id: string;
     name: string;
     email: string;
-    website: string;
     isActive: boolean;
-    type?: AccountsUserTypeChoices | null;
-    modelsQty?: number | null;
-    activeWomanModels?: number | null;
-    activeTransModels?: number | null;
-    verifiedModels?: number | null;
     phoneNumbers: {
       __typename?: "UserPhoneNodeConnection";
       edges: Array<{
@@ -1946,81 +1442,11 @@ export type MeQuery = {
         } | null;
       } | null>;
     };
-    city?: { __typename?: "CityNode"; id: string; name: string } | null;
-  } | null;
-};
-
-export type CreateBannerMutationMutationVariables = Exact<{
-  input: CreateBannerInput;
-}>;
-
-export type CreateBannerMutationMutation = {
-  __typename?: "Mutation";
-  createBanner?: {
-    __typename?: "CreateBannerPayload";
-    banner?: { __typename?: "BannerNode"; id: string } | null;
-  } | null;
-};
-
-export type DeleteBannerMutationMutationVariables = Exact<{
-  input: DeleteBannerInput;
-}>;
-
-export type DeleteBannerMutationMutation = {
-  __typename?: "Mutation";
-  deleteBanner?: {
-    __typename?: "DeleteBannerPayload";
-    success?: boolean | null;
-  } | null;
-};
-
-export type EditBannerMutationVariables = Exact<{
-  input: EditBannerInput;
-}>;
-
-export type EditBannerMutation = {
-  __typename?: "Mutation";
-  editBanner?: {
-    __typename?: "EditBannerPayload";
-    banner?: { __typename?: "BannerNode"; id: string } | null;
-  } | null;
-};
-
-export type BannersQueryQueryVariables = Exact<{ [key: string]: never }>;
-
-export type BannersQueryQuery = {
-  __typename?: "Query";
-  banners?: {
-    __typename?: "BannerNodeConnection";
-    pageInfo: {
-      __typename?: "PageInfo";
-      hasNextPage: boolean;
-      hasPreviousPage: boolean;
-      startCursor?: string | null;
-      endCursor?: string | null;
-    };
-    edges: Array<{
-      __typename?: "BannerNodeEdge";
-      node?: {
-        __typename?: "BannerNode";
-        id: string;
-        title: string;
-        url: string;
-        mobileUrl: string;
-        action?: string | null;
-        category: AdsBannerCategoryChoices;
-        position?: number | null;
-        isActive: boolean;
-        city?: { __typename?: "CityNode"; id: string; name: string } | null;
-      } | null;
-    } | null>;
   } | null;
 };
 
 export type ActivateModelMutationVariables = Exact<{
   modelId: Scalars["String"]["input"];
-  rangeType: ModelRangeType;
-  days: ModelActivationDays;
 }>;
 
 export type ActivateModelMutation = {
@@ -2039,30 +1465,6 @@ export type DeactivateModelMutation = {
   __typename?: "Mutation";
   deactivateModel?: {
     __typename?: "DeactivateModelPayload";
-    model?: { __typename?: "ModelNode"; id: string } | null;
-  } | null;
-};
-
-export type FeaturedModelMutationVariables = Exact<{
-  input: FeaturedModelInput;
-}>;
-
-export type FeaturedModelMutation = {
-  __typename?: "Mutation";
-  featuredModel?: {
-    __typename?: "FeaturedModelPayload";
-    model?: { __typename?: "ModelNode"; id: string } | null;
-  } | null;
-};
-
-export type VerifyModelMutationVariables = Exact<{
-  modelId: Scalars["String"]["input"];
-}>;
-
-export type VerifyModelMutation = {
-  __typename?: "Mutation";
-  verifiedModel?: {
-    __typename?: "VerifiedModelPayload";
     model?: { __typename?: "ModelNode"; id: string } | null;
   } | null;
 };
@@ -2100,30 +1502,12 @@ export type ModelQuery = {
     nonVisibleServices: Array<string | null>;
     attributes: Array<string | null>;
     activationDate?: any | null;
-    expirationDate?: string | null;
     featuredDate?: any | null;
-    featuredExpirationDate?: string | null;
-    subscriptions?: Array<{
-      __typename?: "ModelSubscriptionNode";
-      id: string;
-      rangeType: ModelsModelSubscriptionRangeTypeChoices;
-      startDate: any;
-      daysPurchased: number;
-      endDate: any;
-      isActive: boolean;
-      createdAt: any;
-    } | null> | null;
-    city: { __typename?: "CityNode"; id: string; name: string };
     images?: Array<{
       __typename?: "ModelImageNode";
       id: string;
       imageUrl?: string | null;
     } | null> | null;
-    verificationImages?: {
-      __typename?: "VerificationModelImageNode";
-      imageUrl?: string | null;
-      id: string;
-    } | null;
     videos?: Array<{
       __typename?: "ModelVideoNode";
       id: string;
@@ -2190,7 +1574,6 @@ export type ModelsQuery = {
           name: string;
           email: string;
         };
-        city: { __typename?: "CityNode"; id: string; name: string };
         images?: Array<{
           __typename?: "ModelImageNode";
           id: string;
@@ -2323,22 +1706,7 @@ export const MeDocument = {
                 { kind: "Field", name: { kind: "Name", value: "id" } },
                 { kind: "Field", name: { kind: "Name", value: "name" } },
                 { kind: "Field", name: { kind: "Name", value: "email" } },
-                { kind: "Field", name: { kind: "Name", value: "website" } },
                 { kind: "Field", name: { kind: "Name", value: "isActive" } },
-                { kind: "Field", name: { kind: "Name", value: "type" } },
-                { kind: "Field", name: { kind: "Name", value: "modelsQty" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "activeWomanModels" },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "activeTransModels" },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "verifiedModels" },
-                },
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "phoneNumbers" },
@@ -2378,17 +1746,6 @@ export const MeDocument = {
                     ],
                   },
                 },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "city" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      { kind: "Field", name: { kind: "Name", value: "name" } },
-                    ],
-                  },
-                },
               ],
             },
           },
@@ -2397,299 +1754,6 @@ export const MeDocument = {
     },
   ],
 } as unknown as DocumentNode<MeQuery, MeQueryVariables>;
-export const CreateBannerMutationDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "createBannerMutation" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "input" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "CreateBannerInput" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "createBanner" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "input" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "input" },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "banner" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  CreateBannerMutationMutation,
-  CreateBannerMutationMutationVariables
->;
-export const DeleteBannerMutationDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "deleteBannerMutation" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "input" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "DeleteBannerInput" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "deleteBanner" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "input" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "input" },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "success" } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  DeleteBannerMutationMutation,
-  DeleteBannerMutationMutationVariables
->;
-export const EditBannerDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "editBanner" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "input" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "EditBannerInput" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "editBanner" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "input" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "input" },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "banner" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<EditBannerMutation, EditBannerMutationVariables>;
-export const BannersQueryDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "bannersQuery" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "banners" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "pageInfo" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "hasNextPage" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "hasPreviousPage" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "startCursor" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "endCursor" },
-                      },
-                    ],
-                  },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "edges" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "node" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "id" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "title" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "mobileUrl" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "action" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "category" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "position" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "isActive" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "city" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "id" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "name" },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<BannersQueryQuery, BannersQueryQueryVariables>;
 export const ActivateModelDocument = {
   kind: "Document",
   definitions: [
@@ -2709,31 +1773,6 @@ export const ActivateModelDocument = {
             type: {
               kind: "NamedType",
               name: { kind: "Name", value: "String" },
-            },
-          },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "rangeType" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "ModelRangeType" },
-            },
-          },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "days" } },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "ModelActivationDays" },
             },
           },
         },
@@ -2757,22 +1796,6 @@ export const ActivateModelDocument = {
                       value: {
                         kind: "Variable",
                         name: { kind: "Name", value: "modelId" },
-                      },
-                    },
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "rangeType" },
-                      value: {
-                        kind: "Variable",
-                        name: { kind: "Name", value: "rangeType" },
-                      },
-                    },
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "days" },
-                      value: {
-                        kind: "Variable",
-                        name: { kind: "Name", value: "days" },
                       },
                     },
                   ],
@@ -2875,138 +1898,6 @@ export const DeactivateModelDocument = {
   DeactivateModelMutation,
   DeactivateModelMutationVariables
 >;
-export const FeaturedModelDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "featuredModel" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "input" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "FeaturedModelInput" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "featuredModel" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "input" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "input" },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "model" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  FeaturedModelMutation,
-  FeaturedModelMutationVariables
->;
-export const VerifyModelDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "verifyModel" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "modelId" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "String" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "verifiedModel" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "input" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "modelId" },
-                      value: {
-                        kind: "Variable",
-                        name: { kind: "Name", value: "modelId" },
-                      },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "model" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<VerifyModelMutation, VerifyModelMutationVariables>;
 export const ModelDocument = {
   kind: "Document",
   definitions: [
@@ -3077,60 +1968,7 @@ export const ModelDocument = {
                 },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "expirationDate" },
-                },
-                {
-                  kind: "Field",
                   name: { kind: "Name", value: "featuredDate" },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "featuredExpirationDate" },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "subscriptions" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "rangeType" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "startDate" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "daysPurchased" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "endDate" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "isActive" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "createdAt" },
-                      },
-                    ],
-                  },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "city" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      { kind: "Field", name: { kind: "Name", value: "name" } },
-                    ],
-                  },
                 },
                 {
                   kind: "Field",
@@ -3143,20 +1981,6 @@ export const ModelDocument = {
                         kind: "Field",
                         name: { kind: "Name", value: "imageUrl" },
                       },
-                    ],
-                  },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "verificationImages" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "imageUrl" },
-                      },
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
                     ],
                   },
                 },
@@ -3461,23 +2285,6 @@ export const ModelsDocument = {
                                   {
                                     kind: "Field",
                                     name: { kind: "Name", value: "email" },
-                                  },
-                                ],
-                              },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "city" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "id" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "name" },
                                   },
                                 ],
                               },

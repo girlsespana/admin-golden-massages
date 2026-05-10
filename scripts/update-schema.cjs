@@ -6,7 +6,7 @@ dotenv.config({path: '.env.local'});
 const graphqlEndpoint = process.env.VITE_API_GRAPHQL_URL;
 
 if (!graphqlEndpoint) {
-    throw new Error('Missing required environment variable VITE_API_GRAPHQL_URL. Please check your .env.local file.');
+    throw new Error('Missing required environment variable VITE_API_GRAPHQL_URL. Please check your .env.local.local file.');
 }
 
 const schemaPath = 'schema.graphql';

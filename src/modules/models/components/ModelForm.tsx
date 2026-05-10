@@ -1,50 +1,42 @@
-import { FC } from 'react'
-import { Form, Formik, useFormikContext } from 'formik'
-import { useNavigate } from 'react-router-dom'
+import {FC} from 'react'
+import {Form, Formik, useFormikContext} from 'formik'
+import {useNavigate} from 'react-router-dom'
 import NiceModal from '@ebay/nice-modal-react'
 import clsx from 'clsx'
-import { FaCity, FaArrowLeft, FaStar } from 'react-icons/fa6'
-import { ImWoman } from 'react-icons/im'
-import { HiCheckBadge, HiPlay, HiStop } from 'react-icons/hi2'
-import { FiList } from 'react-icons/fi'
+import {FaArrowLeft, FaStar} from 'react-icons/fa6'
+import {ImWoman} from 'react-icons/im'
+import {HiCheckBadge, HiPlay, HiStop} from 'react-icons/hi2'
 
 import {
-  ModelNode,
-  ModelSubscriptionNode,
-  ModelImageNode,
-  ModelVideoNode,
   ModelAttributes,
+  ModelImageNode,
   ModelLanguages,
+  ModelNode,
   ModelNonVisibleServices,
-  ModelRangeType,
   ModelServices,
   ModelsModelEyesColorChoices,
   ModelsModelGenderChoices,
   ModelsModelHairColorChoices,
   ModelsModelNationalityChoices,
+  ModelVideoNode,
 } from '@types'
 
-import { Button, Text, TextArea } from '@components'
+import {Button, Text, TextArea} from '@components'
 import FormField from '@/components/forms/FormField'
 import ToggleSwitchField from '@/components/forms/ToggleSwitchField'
 import Select from '@/components/forms/Select'
-import type { SelectOption } from '@/components/forms/Select/types'
+import type {SelectOption} from '@/components/forms/Select/types'
 
-import { nationalityTranslations } from '@/modules/models/constants/nationalityTranslations'
-import { getGenderTranslations } from '@/modules/models/constants/genderTranslations'
-import { getHairColorTranslations } from '@/modules/models/constants/hairColorTranslations'
-import { getEyesColorTranslations } from '@/modules/models/constants/eyesColorTranslations'
-import { getLanguageTranslations } from '@/modules/models/constants/languageTranslations'
-import { getServicesTranslations } from '@/modules/models/constants/servicesTranslations'
-import { getNonVisibleTranslations } from '@/modules/models/constants/nonVisibleTranslations'
-import { getAttributesTranslations } from '@/modules/models/constants/attributesTranslations'
-import { rangeTypeTranslations } from '@/modules/models/constants/rangeTypeTranslations'
-
-import VerifiedModelModal from '@/modules/models/components/VerifiedModelModal'
+import {nationalityTranslations} from '@/modules/models/constants/nationalityTranslations'
+import {getGenderTranslations} from '@/modules/models/constants/genderTranslations'
+import {getHairColorTranslations} from '@/modules/models/constants/hairColorTranslations'
+import {getEyesColorTranslations} from '@/modules/models/constants/eyesColorTranslations'
+import {getLanguageTranslations} from '@/modules/models/constants/languageTranslations'
+import {getServicesTranslations} from '@/modules/models/constants/servicesTranslations'
+import {getNonVisibleTranslations} from '@/modules/models/constants/nonVisibleTranslations'
+import {getAttributesTranslations} from '@/modules/models/constants/attributesTranslations'
 import ActivateModelModal from '@/modules/models/components/ActivateModelModal'
 import DeactivateModelModal from '@/modules/models/components/DeactivateModelModal'
-import FeaturedModelModal from '@/modules/models/components/FeaturedModelModal'
-import SubscriptionsModal from '@/modules/models/components/SubscriptionsModal'
 import ModelImages from './ModelImages'
 import ModelVideos from './ModelVideos'
 
@@ -195,10 +187,6 @@ const ModelForm: FC<Props> = ({ model }) => {
   const navigate = useNavigate()
 
   const cover = model.images?.[0]?.imageUrl
-  const subscriptions =
-    model.subscriptions?.filter(
-      (s): s is ModelSubscriptionNode => s !== null,
-    ) ?? []
 
   const initialValues: FormValues = {
     name: model.name ?? '',
@@ -264,13 +252,13 @@ const ModelForm: FC<Props> = ({ model }) => {
               {model.name}
             </h1>
 
-            {/* City chip */}
-            {model.city?.name && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs bg-neutral-800 text-neutral-300 border border-white/[0.06]">
-                <FaCity className="text-primary text-[10px]" />
-                {model.city.name}
-              </span>
-            )}
+            {/*/!* City chip *!/*/}
+            {/*{model.city?.name && (*/}
+            {/*  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs bg-neutral-800 text-neutral-300 border border-white/[0.06]">*/}
+            {/*    <FaCity className="text-primary text-[10px]" />*/}
+            {/*    {model.city.name}*/}
+            {/*  </span>*/}
+            {/*)}*/}
 
             {/* Status badges */}
             <div className="flex flex-wrap gap-2">
@@ -312,17 +300,7 @@ const ModelForm: FC<Props> = ({ model }) => {
             <div className="flex flex-wrap gap-2 pt-1">
               <Button
                 color="success"
-                disabled={!!model.isVerified}
-                onClick={() =>
-                  NiceModal.show(VerifiedModelModal, { node: model })
-                }
-              >
-                <HiCheckBadge className="text-base" />
-                Verificar
-              </Button>
-              <Button
-                color="success"
-                disabled={!model.isVerified || !!model.isActive}
+                disabled={model.isActive}
                 onClick={() =>
                   NiceModal.show(ActivateModelModal, { node: model })
                 }
@@ -339,25 +317,6 @@ const ModelForm: FC<Props> = ({ model }) => {
               >
                 <HiStop className="text-base" />
                 Desactivar
-              </Button>
-              <Button
-                color="primary"
-                disabled={!!model.isFeatured}
-                onClick={() =>
-                  NiceModal.show(FeaturedModelModal, { node: model })
-                }
-              >
-                <FaStar className="text-sm" />
-                Destacar
-              </Button>
-              <Button
-                color="light"
-                onClick={() =>
-                  NiceModal.show(SubscriptionsModal, { subscriptions })
-                }
-              >
-                <FiList />
-                Ver suscripciones
               </Button>
             </div>
           </div>
@@ -381,11 +340,6 @@ const ModelForm: FC<Props> = ({ model }) => {
                 className="col-span-2"
               />
               <FormSelectInner
-                name="rangeType"
-                label="Rango"
-                options={enumToOptions<ModelRangeType>(rangeTypeTranslations)}
-              />
-              <FormSelectInner
                 name="gender"
                 label="Género"
                 options={enumToOptions<ModelsModelGenderChoices>(
@@ -403,15 +357,15 @@ const ModelForm: FC<Props> = ({ model }) => {
                 )}
                 isSearchable
               />
-              <div className="space-y-1.5">
-                <Text as="span" size="sm" weight="medium">
-                  Ciudad
-                </Text>
-                <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-neutral-800/50 border border-neutral-700/50 text-sm text-neutral-300">
-                  <FaCity className="text-primary shrink-0" />
-                  <span>{model.city?.name ?? '—'}</span>
-                </div>
-              </div>
+              {/*<div className="space-y-1.5">*/}
+              {/*  <Text as="span" size="sm" weight="medium">*/}
+              {/*    Ciudad*/}
+              {/*  </Text>*/}
+              {/*  <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-neutral-800/50 border border-neutral-700/50 text-sm text-neutral-300">*/}
+              {/*    <FaCity className="text-primary shrink-0" />*/}
+              {/*    <span>{model.city?.name ?? '—'}</span>*/}
+              {/*  </div>*/}
+              {/*</div>*/}
             </div>
 
             <FormField
@@ -513,19 +467,7 @@ const ModelForm: FC<Props> = ({ model }) => {
                   {formatDate(model.activationDate)}
                 </p>
               </div>
-              <div className="space-y-1">
-                <p className="text-neutral-500 text-xs">
-                  Fecha de expiración
-                </p>
-                <p
-                  className={clsx(
-                    'font-medium text-sm',
-                    model.expirationDate ? 'text-white' : 'text-neutral-500',
-                  )}
-                >
-                  {formatDate(model.expirationDate)}
-                </p>
-              </div>
+
               <div className="space-y-1">
                 <p className="text-neutral-500 text-xs">Fecha destacada</p>
                 <p
@@ -537,34 +479,9 @@ const ModelForm: FC<Props> = ({ model }) => {
                   {formatDate(model.featuredDate)}
                 </p>
               </div>
-              <div className="space-y-1">
-                <p className="text-neutral-500 text-xs">
-                  Fin fecha destacada
-                </p>
-                <p
-                  className={clsx(
-                    'font-medium text-sm',
-                    model.featuredExpirationDate
-                      ? 'text-white'
-                      : 'text-neutral-500',
-                  )}
-                >
-                  {formatDate(model.featuredExpirationDate)}
-                </p>
-              </div>
+
             </div>
 
-            <div className="pt-2">
-              <Button
-                color="light"
-                onClick={() =>
-                  NiceModal.show(SubscriptionsModal, { subscriptions })
-                }
-              >
-                <FiList />
-                Ver historial de suscripciones
-              </Button>
-            </div>
           </SectionCard>
 
           {/* Submit */}
@@ -573,19 +490,6 @@ const ModelForm: FC<Props> = ({ model }) => {
           </div>
         </Form>
       </Formik>
-
-      {/* Media sections */}
-      <SectionCard title="Imagen de verificación">
-        {model.verificationImages ? (
-          <ModelImages
-            images={[model.verificationImages] as ModelImageNode[]}
-          />
-        ) : (
-          <div className="text-neutral-500 border border-dashed border-neutral-800 rounded-xl p-8 text-center text-sm">
-            Sin imagen de verificación
-          </div>
-        )}
-      </SectionCard>
 
       <SectionCard title="Imágenes públicas">
         <ModelImages images={(model.images?.filter(Boolean) as ModelImageNode[]) ?? []} />

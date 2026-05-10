@@ -29,29 +29,10 @@ const ModelQuery = graphql(`
             nonVisibleServices
             attributes
             activationDate
-            expirationDate
             featuredDate
-            featuredExpirationDate
-            subscriptions {
-                id
-                rangeType
-                startDate
-                daysPurchased
-                endDate
-                isActive
-                createdAt
-            }
-            city{
-                id
-                name
-            }
             images {
                 id
                 imageUrl
-            }
-            verificationImages {
-                imageUrl
-                id
             }
             videos {
                 id

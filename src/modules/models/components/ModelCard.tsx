@@ -1,9 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import clsx from "clsx";
-import { ImWoman } from "react-icons/im";
-import { HiCheckBadge } from "react-icons/hi2";
-import { FaStar } from "react-icons/fa6";
-import { FaCity } from "react-icons/fa6";
+import {ImWoman} from "react-icons/im";
+import {FaCity} from "react-icons/fa6";
 
 export interface ModelCardNode {
   id: string
@@ -24,24 +22,25 @@ const ModelCard = ({ node }: Props) => {
   const navigate = useNavigate()
 
   const cover = node.images?.[0]?.imageUrl
-  const isVerified = node.isVerified
-  const isFeatured = node.isFeatured
   const isActive = node.isActive
+
+  console.log(cover);
 
   return (
     <button
       type="button"
       onClick={() => navigate(`/models/${node.id}`)}
-      className="group relative bg-card-dark rounded-2xl border border-white/[0.06] overflow-hidden text-left transition duration-300 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
-    >
+      className="group relative bg-card-dark rounded-2xl border border-white/[0.06] overflow-hidden text-left transition duration-300 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60">
+
       <div className="relative aspect-[3/4] w-full bg-neutral-900 overflow-hidden">
+
         {/* Image */}
         {cover ? (
           <img
             src={cover}
             alt={node.name ?? ""}
             loading="lazy"
-            className="w-full h-full object-cover transition duration-500 group-hover:scale-[1.04]"
+            className="block w-full h-full object-cover transition duration-500 group-hover:scale-[1.04]"
           />
         ) : (
           <div className="w-full h-full grid place-items-center bg-gradient-to-br from-neutral-900 to-neutral-950">
@@ -73,21 +72,6 @@ const ModelCard = ({ node }: Props) => {
           </span>
         </div>
 
-        {/* Top-right: featured + verified */}
-        <div className="absolute top-2.5 right-2.5 flex flex-col items-end gap-1.5">
-          {isFeatured && (
-            <span className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-black/75 backdrop-blur-md border border-primary/50 text-primary">
-              <FaStar className="text-[9px] shrink-0" />
-              Destacada
-            </span>
-          )}
-          {isVerified && (
-            <span className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-black/75 backdrop-blur-md border border-emerald-500/40 text-emerald-400">
-              <HiCheckBadge className="text-xs shrink-0" />
-              Verificada
-            </span>
-          )}
-        </div>
 
         {/* Bottom info — overlaid on gradient */}
         <div className="absolute inset-x-0 bottom-0 px-3 pb-3 pt-1 space-y-1">

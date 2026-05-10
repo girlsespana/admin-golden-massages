@@ -6,13 +6,7 @@ const MeQuery = graphql(`
       id
       name
       email
-      website
       isActive
-      type
-      modelsQty
-      activeWomanModels
-      activeTransModels
-      verifiedModels
       phoneNumbers{
         edges {
           node {
@@ -21,10 +15,6 @@ const MeQuery = graphql(`
             type
           }
         }
-      }
-      city{
-        id
-        name
       }
     }
   }

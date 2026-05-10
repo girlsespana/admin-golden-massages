@@ -19,19 +19,8 @@ enum AccountsUserPhoneTypeChoices {
   CALL
 }
 
-"""An enumeration."""
-enum AccountsUserTypeChoices {
-  """Agency"""
-  AGENCY
-
-  """Independent"""
-  INDEPENDENT
-}
-
 input ActivateModelInput {
   modelId: String!
-  rangeType: ModelRangeType!
-  days: ModelActivationDays!
   clientMutationId: String
 }
 
@@ -39,72 +28,6 @@ type ActivateModelPayload {
   model: ModelNode
   clientMutationId: String
 }
-
-"""An enumeration."""
-enum AdsBannerCategoryChoices {
-  """Home"""
-  HOME
-
-  """Vip"""
-  VIP
-
-  """Top"""
-  TOP
-
-  """Top 2"""
-  TOP2
-
-  """Regular"""
-  REGULAR
-}
-
-"""An enumeration."""
-enum BannerCategoryType {
-  HOME
-  VIP
-  TOP
-  TOP2
-  REGULAR
-}
-
-type BannerNode implements Node {
-  """The ID of the object"""
-  id: ID!
-  title: String!
-  url: String!
-  mobileUrl: String!
-  action: String
-  category: AdsBannerCategoryChoices!
-  city: CityNode
-  position: Int
-  isActive: Boolean!
-  created: DateTime!
-  updated: DateTime!
-}
-
-type BannerNodeConnection {
-  """Pagination data for this connection."""
-  pageInfo: PageInfo!
-
-  """Contains the nodes in this connection."""
-  edges: [BannerNodeEdge]!
-}
-
-"""A Relay edge containing a `BannerNode` and its cursor."""
-type BannerNodeEdge {
-  """The item at the end of the edge"""
-  node: BannerNode
-
-  """A cursor for use in pagination"""
-  cursor: String!
-}
-
-"""
-The `BigInt` scalar type represents non-fractional whole numeric values.
-`BigInt` is not constrained to 32-bit like the `Int` type and thus is a less
-compatible type.
-"""
-scalar BigInt
 
 input ChangePasswordInput {
   oldPassword: String!
@@ -114,109 +37,6 @@ input ChangePasswordInput {
 
 type ChangePasswordPayload {
   user: UserNode
-  clientMutationId: String
-}
-
-type CityNode implements Node {
-  """The ID of the object"""
-  id: ID!
-  name: String!
-  nameAscii: String!
-  slug: String!
-  geonameId: Int
-  alternateNames: String
-  displayName: String!
-  searchNames: String!
-  latitude: Decimal
-  longitude: Decimal
-  region: RegionNode
-  population: BigInt
-  featureCode: String
-  timezone: String
-  userSet(offset: Int, before: String, after: String, first: Int, last: Int): UserNodeConnection!
-  models(
-    offset: Int
-    before: String
-    after: String
-    first: Int
-    last: Int
-    name_Icontains: String
-    age_Gte: Int
-    age_Lte: Int
-    hairColor: ModelsModelHairColorChoices
-    eyesColor: ModelsModelEyesColorChoices
-    nationality: ModelsModelNationalityChoices
-    city: ID
-    boobs: Boolean
-    tattoos: Boolean
-    smoker: Boolean
-    piercings: Boolean
-    party: Boolean
-    isVerified: Boolean
-    isActive: Boolean
-    activationDate_Gt: DateTime
-    activationDate_Gte: DateTime
-    activationDate_Lt: DateTime
-    activationDate_Lte: DateTime
-    createdAt_Gt: DateTime
-    createdAt_Gte: DateTime
-    createdAt_Lt: DateTime
-    createdAt_Lte: DateTime
-    updatedAt_Gt: DateTime
-    updatedAt_Gte: DateTime
-    updatedAt_Lt: DateTime
-    updatedAt_Lte: DateTime
-    gender: ModelsModelGenderChoices
-    rangeType: ModelsModelRangeTypeChoices
-    isFeatured: Boolean
-    id: String
-    user_Id: String
-    user_Type: String
-    languages: String
-    service_Modes: String
-    services: String
-    nonVisibleServices: String
-    attributes: String
-    hasVideos: Boolean
-    globalSearch: String
-
-    """Ordering"""
-    orderBy: String
-  ): ModelNodeConnection!
-  banners(offset: Int, before: String, after: String, first: Int, last: Int, city: ID, category: AdsBannerCategoryChoices, isActive: Boolean): BannerNodeConnection!
-}
-
-type CityNodeConnection {
-  """Pagination data for this connection."""
-  pageInfo: PageInfo!
-
-  """Contains the nodes in this connection."""
-  edges: [CityNodeEdge]!
-}
-
-"""A Relay edge containing a `CityNode` and its cursor."""
-type CityNodeEdge {
-  """The item at the end of the edge"""
-  node: CityNode
-
-  """A cursor for use in pagination"""
-  cursor: String!
-}
-
-input CreateBannerInput {
-  title: String!
-  action: String!
-  category: BannerCategoryType!
-  cityId: String!
-  url: String!
-  mobileUrl: String!
-  isActive: Boolean!
-  position: Int
-  clientMutationId: String
-}
-
-type CreateBannerPayload {
-  banner: BannerNode
   clientMutationId: String
 }
 
@@ -236,7 +56,6 @@ input CreateModelInput {
   piercings: Boolean!
   party: Boolean!
   images: [String]!
-  verificationImage: String!
   videos: [String]!
   description: String
   gender: ModelGender!
@@ -248,21 +67,6 @@ input CreateModelInput {
 
 type CreateModelPayload {
   model: ModelNode
-  clientMutationId: String
-}
-
-input CreateUserInput {
-  email: String!
-  name: String!
-  cityId: String!
-  phoneNumbers: [UserPhoneInputType]!
-  acceptHiddenCalls: Boolean
-  password: String!
-  clientMutationId: String
-}
-
-type CreateUserPayload {
-  user: UserNode
   clientMutationId: String
 }
 
@@ -283,19 +87,6 @@ type DeactivateModelPayload {
   clientMutationId: String
 }
 
-"""The `Decimal` scalar type represents a python Decimal."""
-scalar Decimal
-
-input DeleteBannerInput {
-  id: String!
-  clientMutationId: String
-}
-
-type DeleteBannerPayload {
-  success: Boolean
-  clientMutationId: String
-}
-
 input DeleteModelInput {
   modelId: String!
   clientMutationId: String
@@ -303,24 +94,6 @@ input DeleteModelInput {
 
 type DeleteModelPayload {
   success: Boolean
-  clientMutationId: String
-}
-
-input EditBannerInput {
-  title: String!
-  action: String!
-  category: BannerCategoryType!
-  cityId: String!
-  url: String!
-  mobileUrl: String!
-  isActive: Boolean!
-  position: Int
-  id: String!
-  clientMutationId: String
-}
-
-type EditBannerPayload {
-  banner: BannerNode
   clientMutationId: String
 }
 
@@ -340,7 +113,6 @@ input EditModelInput {
   piercings: Boolean!
   party: Boolean!
   images: [String]
-  verificationImage: String!
   videos: [String]
   description: String
   gender: ModelGender!
@@ -356,29 +128,12 @@ type EditModelPayload {
   clientMutationId: String
 }
 
-input FeaturedModelInput {
-  modelId: String!
-  clientMutationId: String
-}
-
-type FeaturedModelPayload {
-  model: ModelNode
-  clientMutationId: String
-}
-
 """
 The `GenericScalar` scalar type represents a generic
 GraphQL scalar value that could be:
 String, Boolean, Int, Float, List or Object.
 """
 scalar GenericScalar
-
-"""An enumeration."""
-enum ModelActivationDays {
-  SEVEN_DAYS
-  FIFTEEN_DAYS
-  THIRTY_DAYS
-}
 
 """An enumeration."""
 enum ModelAttributes {
@@ -700,7 +455,6 @@ type ModelNode implements Node {
   hairColor: ModelsModelHairColorChoices!
   eyesColor: ModelsModelEyesColorChoices!
   nationality: ModelsModelNationalityChoices!
-  city: CityNode!
   boobs: Boolean!
   tattoos: Boolean!
   smoker: Boolean!
@@ -723,16 +477,8 @@ type ModelNode implements Node {
   isFeatured: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
-  subscriptions: [ModelSubscriptionNode]
   images: [ModelImageNode]
-  verificationImages: VerificationModelImageNode
   videos: [ModelVideoNode]
-  activeSubscription(
-    """The ID of the object"""
-    id: ID!
-  ): ModelSubscriptionNode
-  expirationDate: String
-  featuredExpirationDate: String
 }
 
 type ModelNodeConnection {
@@ -780,13 +526,6 @@ enum ModelNonVisibleServices {
   STRAP_ON
   SWINGERS_CLUB
   THREESOME
-}
-
-"""An enumeration."""
-enum ModelRangeType {
-  REGULAR
-  TOP
-  VIP
 }
 
 """An enumeration."""
@@ -1597,47 +1336,6 @@ enum ModelsModelRangeTypeChoices {
   VIP
 }
 
-"""An enumeration."""
-enum ModelsModelSubscriptionRangeTypeChoices {
-  """Regular"""
-  REGULAR
-
-  """Top"""
-  TOP
-
-  """Vip"""
-  VIP
-}
-
-type ModelSubscriptionNode implements Node {
-  """The ID of the object"""
-  id: ID!
-  model: ModelNode!
-  rangeType: ModelsModelSubscriptionRangeTypeChoices!
-  startDate: DateTime!
-  endDate: DateTime!
-  daysPurchased: Int!
-  isActive: Boolean!
-  createdAt: DateTime!
-}
-
-type ModelSubscriptionNodeConnection {
-  """Pagination data for this connection."""
-  pageInfo: PageInfo!
-
-  """Contains the nodes in this connection."""
-  edges: [ModelSubscriptionNodeEdge]!
-}
-
-"""A Relay edge containing a `ModelSubscriptionNode` and its cursor."""
-type ModelSubscriptionNodeEdge {
-  """The item at the end of the edge"""
-  node: ModelSubscriptionNode
-
-  """A cursor for use in pagination"""
-  cursor: String!
-}
-
 type ModelVideoNode implements Node {
   """The ID of the object"""
   id: ID!
@@ -1646,20 +1344,14 @@ type ModelVideoNode implements Node {
 }
 
 type Mutation {
-  createBanner(input: CreateBannerInput!): CreateBannerPayload
-  editBanner(input: EditBannerInput!): EditBannerPayload
-  deleteBanner(input: DeleteBannerInput!): DeleteBannerPayload
   createModel(input: CreateModelInput!): CreateModelPayload
   editModel(input: EditModelInput!): EditModelPayload
-  verifiedModel(input: VerifiedModelInput!): VerifiedModelPayload
   activateModel(input: ActivateModelInput!): ActivateModelPayload
   deactivateModel(input: DeactivateModelInput!): DeactivateModelPayload
-  featuredModel(input: FeaturedModelInput!): FeaturedModelPayload
   deleteModel(input: DeleteModelInput!): DeleteModelPayload
   tokenAuth(input: ObtainJSONWebTokenInput!): ObtainJSONWebTokenPayload
   verifyToken(token: String): Verify
   refreshToken(token: String): Refresh
-  createUser(input: CreateUserInput!): CreateUserPayload
   updateUser(input: UpdateUserInput!): UpdateUserPayload
   changePassword(input: ChangePasswordInput!): ChangePasswordPayload
 }
@@ -1709,19 +1401,6 @@ enum PhoneType {
 }
 
 type Query {
-  banners(offset: Int, before: String, after: String, first: Int, last: Int, city: ID, category: AdsBannerCategoryChoices, isActive: Boolean): BannerNodeConnection
-  city(
-    """The ID of the object"""
-    id: ID!
-  ): CityNode
-  cities(offset: Int, before: String, after: String, first: Int, last: Int, searchNames: String, searchNames_Icontains: String, regionId: String): CityNodeConnection
-  femaleCities: [CityNode]
-  transCities: [CityNode]
-  region(
-    """The ID of the object"""
-    id: ID!
-  ): RegionNode
-  regions(offset: Int, before: String, after: String, first: Int, last: Int, name: String, name_Icontains: String): RegionNodeConnection
   model(
     """The ID of the object"""
     id: ID!
@@ -1775,11 +1454,6 @@ type Query {
     """Ordering"""
     orderBy: String
   ): ModelNodeConnection
-  modelSubscription(
-    """The ID of the object"""
-    id: ID!
-  ): ModelSubscriptionNode
-  modelSubscriptions(offset: Int, before: String, after: String, first: Int, last: Int): ModelSubscriptionNodeConnection
   me: UserNode
 }
 
@@ -1787,36 +1461,6 @@ type Refresh {
   payload: GenericScalar!
   refreshExpiresIn: Int!
   token: String!
-}
-
-type RegionNode implements Node {
-  """The ID of the object"""
-  id: ID!
-  name: String!
-  nameAscii: String!
-  slug: String!
-  geonameId: Int
-  alternateNames: String
-  displayName: String!
-  geonameCode: String
-  citySet(offset: Int, before: String, after: String, first: Int, last: Int, searchNames: String, searchNames_Icontains: String, regionId: String): CityNodeConnection!
-}
-
-type RegionNodeConnection {
-  """Pagination data for this connection."""
-  pageInfo: PageInfo!
-
-  """Contains the nodes in this connection."""
-  edges: [RegionNodeEdge]!
-}
-
-"""A Relay edge containing a `RegionNode` and its cursor."""
-type RegionNodeEdge {
-  """The item at the end of the edge"""
-  node: RegionNode
-
-  """A cursor for use in pagination"""
-  cursor: String!
 }
 
 input UpdateUserInput {
@@ -1846,15 +1490,10 @@ type UserNode implements Node {
   isSuperuser: Boolean!
   email: String!
   name: String!
-  website: String!
-  city: CityNode
-  type: AccountsUserTypeChoices
-  acceptHiddenCalls: Boolean!
   created: DateTime!
   updated: DateTime!
   isStaff: Boolean!
   isActive: Boolean!
-  phoneNumbers(offset: Int, before: String, after: String, first: Int, last: Int): UserPhoneNodeConnection!
   models(
     offset: Int
     before: String
@@ -1904,27 +1543,7 @@ type UserNode implements Node {
     """Ordering"""
     orderBy: String
   ): ModelNodeConnection!
-  modelsQty: Int
-  activeWomanModels: Int
-  activeTransModels: Int
-  verifiedModels: Int
-}
-
-type UserNodeConnection {
-  """Pagination data for this connection."""
-  pageInfo: PageInfo!
-
-  """Contains the nodes in this connection."""
-  edges: [UserNodeEdge]!
-}
-
-"""A Relay edge containing a `UserNode` and its cursor."""
-type UserNodeEdge {
-  """The item at the end of the edge"""
-  node: UserNode
-
-  """A cursor for use in pagination"""
-  cursor: String!
+  phoneNumbers(offset: Int, before: String, after: String, first: Int, last: Int): UserPhoneNodeConnection!
 }
 
 input UserPhoneInputType {
@@ -1957,23 +1576,6 @@ type UserPhoneNodeEdge {
 
   """A cursor for use in pagination"""
   cursor: String!
-}
-
-type VerificationModelImageNode implements Node {
-  """The ID of the object"""
-  id: ID!
-  model: ModelNode!
-  imageUrl: String
-}
-
-input VerifiedModelInput {
-  modelId: String!
-  clientMutationId: String
-}
-
-type VerifiedModelPayload {
-  model: ModelNode
-  clientMutationId: String
 }
 
 type Verify {

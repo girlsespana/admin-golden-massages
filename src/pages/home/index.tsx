@@ -1,16 +1,14 @@
-import { useRecoilState } from "recoil";
-import { HiFilter } from "react-icons/hi";
-import { RxCaretDown, RxCaretUp } from "react-icons/rx";
+import {useRecoilState} from "recoil";
+import {HiFilter} from "react-icons/hi";
+import {RxCaretDown, RxCaretUp} from "react-icons/rx";
 import clsx from "clsx";
-import { Button } from "@components";
+import {Button} from "@components";
 import showTableFiltersState from "@dash-lay/atoms/showTableFiltersState";
 import TableRefetchBtn from "@/components/tables/TableRefetchBtn";
 import ModelsGrid from "@/modules/models/components/ModelsGrid";
 import SearchByIDFilter from "@/modules/models/components/forms/SearchByIDFilter";
 import SearchByNameFilter from "@/modules/models/components/forms/SearchByNameFilter";
-import VerifiedFilter from "@/modules/models/components/forms/VerifiedFilter";
 import ActiveSelectFilter from "@/modules/models/components/forms/ActiveSelectFilter";
-import CitySelectFilter from "@/components/forms/CitySelectFilter";
 
 const HomePage = () => {
   const [showFilters, setShowFilters] = useRecoilState(showTableFiltersState)
@@ -53,8 +51,6 @@ const HomePage = () => {
               <div className="bg-card-dark/60 border border-white/[0.06] rounded-xl p-4 grid gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
                 <SearchByIDFilter />
                 <SearchByNameFilter />
-                <CitySelectFilter />
-                <VerifiedFilter />
                 <ActiveSelectFilter />
               </div>
             </div>

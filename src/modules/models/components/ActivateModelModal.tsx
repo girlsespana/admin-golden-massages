@@ -1,17 +1,13 @@
-import NiceModal, { NiceModalHocProps, useModal } from "@ebay/nice-modal-react";
-import { Button, Modal } from "@components";
-import { ModelActivationDays, ModelNode, ModelRangeType } from "@types";
-import { FC, useState } from "react";
-import RangeModelSelect from "@/modules/models/components/forms/RangeModelSelect";
-import ModelActivationDaysSelect from "@/modules/models/components/forms/ModelActivationDaysSelect";
-import { SingleValue } from "react-select";
-import { SelectOption } from "@/components/forms/Select/types";
-import { GraphQLError, GraphQLFormattedError } from "graphql/index";
-import { useMutation } from "@apollo/client";
+import NiceModal, {NiceModalHocProps, useModal} from "@ebay/nice-modal-react";
+import {Button, Modal} from "@components";
+import {ModelNode} from "@types";
+import {FC, useState} from "react";
+import {GraphQLError, GraphQLFormattedError} from "graphql/index";
+import {useMutation} from "@apollo/client";
 import activateModelMutation from "@/modules/models/mutations/activateModelMutation";
-import modelQuery from "@/modules/models/queries/ModelQuery";
 import modelsQuery from "@/modules/models/queries/ModelsQuery";
-import { HiPlay } from "react-icons/hi2";
+import {HiPlay} from "react-icons/hi2";
+import modelQuery from "@/modules/models/queries/ModelQuery";
 
 interface Props extends NiceModalHocProps {
   node: ModelNode;
@@ -19,10 +15,6 @@ interface Props extends NiceModalHocProps {
 
 const ActivateModelModal: FC<Props> = NiceModal.create(({ node }) => {
   const [errors, setErrors] = useState<GraphQLFormattedError[] | null>(null)
-  const [selectError, setSelectError] = useState<string | null>(null)
-  const [daysError, setDaysError] = useState<string | null>(null)
-  const [rangeType, setRangeType] = useState<ModelRangeType | null>(null)
-  const [days, setDays] = useState<ModelActivationDays | null>(null)
 
   const modal = useModal()
   const [activateModal, { loading }] = useMutation(activateModelMutation, {
@@ -36,38 +28,11 @@ const ActivateModelModal: FC<Props> = NiceModal.create(({ node }) => {
     refetchQueries: [modelQuery, modelsQuery]
   })
 
-  const handleRangeSelectChange = (value: SingleValue<SelectOption>) => {
-    if (value) {
-      setSelectError(null)
-      setRangeType(value.value as ModelRangeType)
-    } else {
-      setRangeType(null)
-    }
-  }
-
-  const handleDaysSelectChange = (value: SingleValue<SelectOption>) => {
-    if (value) {
-      setDaysError(null)
-      setDays(value.value as ModelActivationDays)
-    } else {
-      setDays(null)
-    }
-  }
 
   const handleActivateModelBtn = () => {
-    if (!rangeType) {
-      setSelectError("Debes seleccionar un rango para activar la modelo")
-      return
-    }
-    if (!days) {
-      setDaysError("Debes seleccionar el número de días para activar la modelo")
-      return
-    }
     activateModal({
       variables: {
-        modelId: node.id,
-        rangeType: rangeType,
-        days: days
+        modelId: node.id
       }
     })
   }
@@ -90,20 +55,6 @@ const ActivateModelModal: FC<Props> = NiceModal.create(({ node }) => {
             Una vez activada, la modelo quedará marcada como <strong className="text-emerald-100">ACTIVA</strong> en el sistema.
             Selecciona la categoría y el período de activación.
           </span>
-        </div>
-
-        <div className="space-y-1">
-          <RangeModelSelect onChange={handleRangeSelectChange} />
-          {selectError && (
-            <p className="text-red-400 text-xs px-1">{selectError}</p>
-          )}
-        </div>
-
-        <div className="space-y-1">
-          <ModelActivationDaysSelect onChange={handleDaysSelectChange} />
-          {daysError && (
-            <p className="text-red-400 text-xs px-1">{daysError}</p>
-          )}
         </div>
 
         {errors && (
