@@ -1,5 +1,6 @@
 import { useEffect, useState, ChangeEvent } from 'react'
 import clsx from 'clsx'
+import { IoClose } from 'react-icons/io5'
 import {
   controlStyles,
   placeholderStyles,
@@ -9,28 +10,35 @@ import { useFilters } from '@hooks'
 
 const param = 'name_Icontains'
 
-const SearchByNameFilter = () => {
+interface Props {
+  resetKey?: number
+}
+
+const SearchByNameFilter = ({ resetKey }: Props) => {
   const [focused, setFocused] = useState(false)
   const [value, setValue] = useState('')
   const { get, set, remove } = useFilters()
 
-  // ✅ Load default value if "id" exists in query params
   useEffect(() => {
     const existingValue = get(param)
-    if (existingValue) {
-      setValue(existingValue)
-    }
-  }, [get])
+    setValue(existingValue ?? '')
+  }, [resetKey])
+
+  useEffect(() => {
+    const existingValue = get(param)
+    if (existingValue) setValue(existingValue)
+  }, [])
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value
     setValue(newValue)
+    if (newValue) set(param, newValue)
+    else remove(param)
+  }
 
-    if (newValue) {
-      set(param, newValue)
-    } else {
-      remove(param)
-    }
+  const handleClear = () => {
+    setValue('')
+    remove(param)
   }
 
   return (
@@ -38,7 +46,7 @@ const SearchByNameFilter = () => {
       className={clsx(
         controlStyles.base,
         focused ? controlStyles.focus : controlStyles.nonFocus,
-        'flex items-center transition-all duration-200'
+        'flex items-center gap-1 pr-1 transition-all duration-200'
       )}
     >
       <input
@@ -48,12 +56,17 @@ const SearchByNameFilter = () => {
         onChange={handleChange}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        className={clsx(
-          'w-full bg-transparent outline-none',
-          placeholderStyles,
-          valueContainerStyles
-        )}
+        className={clsx('w-full bg-transparent outline-none', placeholderStyles, valueContainerStyles)}
       />
+      {value && (
+        <button
+          type="button"
+          onClick={handleClear}
+          className="shrink-0 p-1 rounded text-neutral-500 hover:text-neutral-200 transition-colors"
+        >
+          <IoClose className="text-base" />
+        </button>
+      )}
     </div>
   )
 }

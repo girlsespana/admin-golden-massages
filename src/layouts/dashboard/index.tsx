@@ -95,7 +95,7 @@ const DashboardLayout = ({ children }: Props) => {
         </header>
 
         {/* Content */}
-        <main className="relative z-10 flex-1 overflow-auto">
+        <main className="relative z-10 flex-1 overflow-auto pb-24">
           {children}
         </main>
       </div>

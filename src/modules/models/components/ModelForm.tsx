@@ -37,6 +37,7 @@ import {getNonVisibleTranslations} from '@/modules/models/constants/nonVisibleTr
 import {getAttributesTranslations} from '@/modules/models/constants/attributesTranslations'
 import ActivateModelModal from '@/modules/models/components/ActivateModelModal'
 import DeactivateModelModal from '@/modules/models/components/DeactivateModelModal'
+import UnsavedChangesBar from '@/modules/models/components/UnsavedChangesBar'
 import ModelImages from './ModelImages'
 import ModelVideos from './ModelVideos'
 
@@ -484,10 +485,13 @@ const ModelForm: FC<Props> = ({ model }) => {
 
           </SectionCard>
 
-          {/* Submit */}
-          <div className="flex justify-end">
-            <Button type="submit">Guardar cambios</Button>
+          <div className="flex justify-end pt-2">
+            <Button type="submit" color="light" disabled={false}>
+              Guardar cambios
+            </Button>
           </div>
+
+          <UnsavedChangesBar />
         </Form>
       </Formik>
 

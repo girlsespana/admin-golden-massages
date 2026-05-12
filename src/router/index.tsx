@@ -8,6 +8,7 @@ import MeProvider from '@/modules/auth/contexts/MeProvider'
 import AuthProvider from '@/modules/auth/contexts/AuthProvider'
 import HomePage from "@/pages/home";
 import ModelPage from "@/pages/models/model/ModelPage";
+import CreateModelPage from "@/pages/models/create/CreateModelPage";
 
 
 const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <HomePage/>,
+      },
+      {
+        path: '/models/create',
+        element: <CreateModelPage/>,
       },
       {
         path: '/models/:modelId',

@@ -14,7 +14,7 @@ const VerifiedFilter = () => {
   ];
 
   const currentValue = get(param);
-  const defaultValue = options.find((opt) => opt.value === currentValue) ?? null;
+  const value = options.find((opt) => opt.value === currentValue) ?? null;
 
   const handleSelectChange = (selectOption: SingleValue<SelectOption>) => {
     if (selectOption) {
@@ -26,7 +26,7 @@ const VerifiedFilter = () => {
 
   return (
     <Select
-      defaultValue={defaultValue}
+      value={value}
       placeholder="Verificad@"
       options={options}
       menuPosition="fixed"

@@ -13,9 +13,8 @@ const ActiveSelectFilter = () => {
     { label: "Inactivo", value: "false" },
   ];
 
-  // ✅ read saved filter value
   const currentValue = get(param);
-  const defaultValue = options.find((opt) => opt.value === currentValue) ?? null;
+  const value = options.find((opt) => opt.value === currentValue) ?? null;
 
   const handleSelectChange = (selectOption: SingleValue<SelectOption>) => {
     if (selectOption) {
@@ -27,7 +26,7 @@ const ActiveSelectFilter = () => {
 
   return (
     <Select
-      defaultValue={defaultValue} // ✅ now defaults correctly
+      value={value}
       placeholder="Activ@"
       options={options}
       menuPosition="fixed"
