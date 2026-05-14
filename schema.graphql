@@ -469,7 +469,6 @@ type ModelNode implements Node {
   """Selecciona los atributos disponibles"""
   attributes: [String]!
   languages: [ModelLanguages]
-  isVerified: Boolean!
   isActive: Boolean!
   activationDate: DateTime
   rangeType: ModelsModelRangeTypeChoices!
@@ -1423,7 +1422,6 @@ type Query {
     smoker: Boolean
     piercings: Boolean
     party: Boolean
-    isVerified: Boolean
     isActive: Boolean
     activationDate_Gt: DateTime
     activationDate_Gte: DateTime
@@ -1512,7 +1510,6 @@ type UserNode implements Node {
     smoker: Boolean
     piercings: Boolean
     party: Boolean
-    isVerified: Boolean
     isActive: Boolean
     activationDate_Gt: DateTime
     activationDate_Gte: DateTime

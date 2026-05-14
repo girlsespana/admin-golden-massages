@@ -8,7 +8,7 @@ import {Transition} from '@headlessui/react'
 import {FaWeightScale} from 'react-icons/fa6'
 import {IoClose, IoColorWand} from 'react-icons/io5'
 import {MdDraw, MdLanguage, MdOutlineHeight, MdPermContactCalendar} from 'react-icons/md'
-import {FaCheck, FaCircle, FaCity, FaEye, FaMapMarkedAlt, FaRing, FaTransgenderAlt} from 'react-icons/fa'
+import {FaCheck, FaCircle, FaEye, FaMapMarkedAlt, FaRing, FaTransgenderAlt} from 'react-icons/fa'
 import {ModelLanguages, ModelNode, ModelsModelGenderChoices, ModelsModelHairColorChoices,} from '@types'
 import {getGenderTranslations} from "@/modules/models/constants/genderTranslations";
 import {getHairColorTranslations} from "@/modules/models/constants/hairColorTranslations";
@@ -75,16 +75,8 @@ const ModelInfo: FC<Props> = ({model, showStatuses = false}) => {
             showStatuses &&
             <div className="mt-4 flex items-center gap-2">
               <IndicatorBadge
-                isActive={model.isVerified}
-                text={model.isVerified ? "Verificad@" : "Sin verificar"}
-              />
-              <IndicatorBadge
                 isActive={model.isActive}
                 text={model.isActive ? "Activ@" : "No activ@"}
-              />
-              <IndicatorBadge
-                isActive={model.isFeatured}
-                text={model.isFeatured ? "Destacada" : "No Destacada"}
               />
             </div>
           }
@@ -118,11 +110,6 @@ const ModelInfo: FC<Props> = ({model, showStatuses = false}) => {
               icon={ImWoman}
               title="Medidas"
               value={`${model?.metrics}`}
-            />
-            <DetailItem
-              icon={FaCity}
-              title="Ciudad"
-              value={model?.city.name}
             />
             <DetailItem
               icon={MdLanguage}

@@ -23,8 +23,6 @@ const ModelQuery = graphql(`
             rangeType
             description
             isActive
-            isVerified
-            isFeatured
             services
             nonVisibleServices
             attributes

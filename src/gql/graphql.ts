@@ -483,7 +483,6 @@ export type ModelNode = Node & {
   images?: Maybe<Array<Maybe<ModelImageNode>>>;
   isActive: Scalars["Boolean"]["output"];
   isFeatured: Scalars["Boolean"]["output"];
-  isVerified: Scalars["Boolean"]["output"];
   languages?: Maybe<Array<Maybe<ModelLanguages>>>;
   /** Enter measurements in the format 60-90-60 */
   metrics?: Maybe<Scalars["String"]["output"]>;
@@ -1246,7 +1245,6 @@ export type QueryModelsArgs = {
   id?: InputMaybe<Scalars["String"]["input"]>;
   isActive?: InputMaybe<Scalars["Boolean"]["input"]>;
   isFeatured?: InputMaybe<Scalars["Boolean"]["input"]>;
-  isVerified?: InputMaybe<Scalars["Boolean"]["input"]>;
   languages?: InputMaybe<Scalars["String"]["input"]>;
   last?: InputMaybe<Scalars["Int"]["input"]>;
   name_Icontains?: InputMaybe<Scalars["String"]["input"]>;
@@ -1335,7 +1333,6 @@ export type UserNodeModelsArgs = {
   id?: InputMaybe<Scalars["String"]["input"]>;
   isActive?: InputMaybe<Scalars["Boolean"]["input"]>;
   isFeatured?: InputMaybe<Scalars["Boolean"]["input"]>;
-  isVerified?: InputMaybe<Scalars["Boolean"]["input"]>;
   languages?: InputMaybe<Scalars["String"]["input"]>;
   last?: InputMaybe<Scalars["Int"]["input"]>;
   name_Icontains?: InputMaybe<Scalars["String"]["input"]>;
@@ -1457,6 +1454,18 @@ export type ActivateModelMutation = {
   } | null;
 };
 
+export type CreateModelMutationVariables = Exact<{
+  input: CreateModelInput;
+}>;
+
+export type CreateModelMutation = {
+  __typename?: "Mutation";
+  createModel?: {
+    __typename?: "CreateModelPayload";
+    model?: { __typename?: "ModelNode"; id: string } | null;
+  } | null;
+};
+
 export type DeactivateModelMutationVariables = Exact<{
   modelId: Scalars["String"]["input"];
 }>;
@@ -1496,8 +1505,6 @@ export type ModelQuery = {
     rangeType: ModelsModelRangeTypeChoices;
     description?: string | null;
     isActive: boolean;
-    isVerified: boolean;
-    isFeatured: boolean;
     services?: Array<ModelServices | null> | null;
     nonVisibleServices: Array<string | null>;
     attributes: Array<string | null>;
@@ -1536,7 +1543,6 @@ export type ModelsQueryVariables = Exact<{
   first?: InputMaybe<Scalars["Int"]["input"]>;
   after?: InputMaybe<Scalars["String"]["input"]>;
   isActive?: InputMaybe<Scalars["Boolean"]["input"]>;
-  isVerified?: InputMaybe<Scalars["Boolean"]["input"]>;
   id?: InputMaybe<Scalars["String"]["input"]>;
   cityId?: InputMaybe<Scalars["ID"]["input"]>;
   name_Icontains?: InputMaybe<Scalars["String"]["input"]>;
@@ -1563,8 +1569,6 @@ export type ModelsQuery = {
         description?: string | null;
         rangeType: ModelsModelRangeTypeChoices;
         isActive: boolean;
-        isVerified: boolean;
-        isFeatured: boolean;
         activationDate?: any | null;
         createdAt: any;
         updatedAt: any;
@@ -1826,6 +1830,66 @@ export const ActivateModelDocument = {
   ActivateModelMutation,
   ActivateModelMutationVariables
 >;
+export const CreateModelDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "createModel" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "input" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "CreateModelInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "createModel" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "input" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "model" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<CreateModelMutation, CreateModelMutationVariables>;
 export const DeactivateModelDocument = {
   kind: "Document",
   definitions: [
@@ -1954,8 +2018,6 @@ export const ModelDocument = {
                 { kind: "Field", name: { kind: "Name", value: "rangeType" } },
                 { kind: "Field", name: { kind: "Name", value: "description" } },
                 { kind: "Field", name: { kind: "Name", value: "isActive" } },
-                { kind: "Field", name: { kind: "Name", value: "isVerified" } },
-                { kind: "Field", name: { kind: "Name", value: "isFeatured" } },
                 { kind: "Field", name: { kind: "Name", value: "services" } },
                 {
                   kind: "Field",
@@ -2092,14 +2154,6 @@ export const ModelsDocument = {
         },
         {
           kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "isVerified" },
-          },
-          type: { kind: "NamedType", name: { kind: "Name", value: "Boolean" } },
-        },
-        {
-          kind: "VariableDefinition",
           variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
           type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
         },
@@ -2149,14 +2203,6 @@ export const ModelsDocument = {
                 value: {
                   kind: "Variable",
                   name: { kind: "Name", value: "isActive" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "isVerified" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "isVerified" },
                 },
               },
               {
@@ -2247,14 +2293,6 @@ export const ModelsDocument = {
                             {
                               kind: "Field",
                               name: { kind: "Name", value: "isActive" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "isVerified" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "isFeatured" },
                             },
                             {
                               kind: "Field",
