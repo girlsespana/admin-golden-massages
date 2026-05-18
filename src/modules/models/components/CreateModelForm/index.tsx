@@ -24,6 +24,7 @@ import PhysicalInfoSection from './components/PhysicalInfoSection'
 import ServicesSection from './components/ServicesSection'
 import ModelMediaSection from './components/ModelMediaSection'
 import UnsavedChangesBar from '@/modules/models/components/UnsavedChangesBar'
+import {ImageFile} from "@/components/forms/types";
 
 
 interface FormValues {
@@ -54,8 +55,8 @@ const CreateModelForm: FC = () => {
   const toast = useToast()
   const {uploadImage, loading: uploading} = useImageUploader()
 
-  const [images, setImages] = useState<Array<{id: string; file: File; preview: string}>>([])
-  const [videos, setVideos] = useState<Array<{id: string; file: File; preview: string}>>([])
+  const [images, setImages] = useState<ImageFile[]>([])
+  const [videos, setVideos] = useState<ImageFile[]>([])
 
   const [createModel, {loading}] = useMutation(createModelMutation, {
     refetchQueries: [ModelsQuery],

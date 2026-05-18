@@ -5,7 +5,7 @@ import NiceModal from '@ebay/nice-modal-react'
 import clsx from 'clsx'
 import {FaArrowLeft, FaStar} from 'react-icons/fa6'
 import {ImWoman} from 'react-icons/im'
-import {HiCheckBadge, HiPlay, HiStop} from 'react-icons/hi2'
+import {HiPlay, HiStop} from 'react-icons/hi2'
 
 import {
   ModelAttributes,
@@ -281,13 +281,6 @@ const ModelForm: FC<Props> = ({ model }) => {
                 />
                 {model.isActive ? 'Activa' : 'Inactiva'}
               </span>
-
-              {model.isVerified && (
-                <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-                  <HiCheckBadge className="text-xs" />
-                  Verificada
-                </span>
-              )}
 
               {model.isFeatured && (
                 <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-primary/20 text-primary border border-primary/40">

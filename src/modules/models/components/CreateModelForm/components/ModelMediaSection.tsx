@@ -3,6 +3,7 @@ import MediaDropSection from './MediaDropSection'
 import {BiImageAdd} from 'react-icons/bi'
 import {RiVideoAddFill} from 'react-icons/ri'
 import type {ImageFile} from '@/components/forms/types'
+import {FC} from "react";
 
 interface ModelMediaSectionProps {
   images: ImageFile[]
