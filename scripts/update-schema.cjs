@@ -1,7 +1,7 @@
 const {execSync} = require('child_process');
 const dotenv = require('dotenv');
 
-dotenv.config({path: '.env.local'});
+dotenv.config({path: '.env'});
 
 const graphqlEndpoint = process.env.VITE_API_GRAPHQL_URL;
 

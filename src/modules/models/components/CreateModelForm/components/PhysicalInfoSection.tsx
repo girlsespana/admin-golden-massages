@@ -15,10 +15,7 @@ interface PhysicalInfoSectionProps {
   hairColorOptionsEnum: typeof ModelsModelHairColorChoices
 }
 
-const PhysicalInfoSection: FC<PhysicalInfoSectionProps> = ({
-  eyesColorOptionsEnum,
-  hairColorOptionsEnum,
-}) => (
+const PhysicalInfoSection: FC<PhysicalInfoSectionProps> = () => (
   <>
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
       <FormField name="age" label="Edad" type="number" placeholder="años" />
@@ -44,6 +41,7 @@ const PhysicalInfoSection: FC<PhysicalInfoSectionProps> = ({
       <ToggleSwitchField name="boobs" label="Pecho operado" />
       <ToggleSwitchField name="piercings" label="Piercings" />
       <ToggleSwitchField name="tattoos" label="Tatuajes" />
+      <ToggleSwitchField name="smoker" label="Fumadora" />
       <ToggleSwitchField name="party" label="Party" />
     </div>
   </>

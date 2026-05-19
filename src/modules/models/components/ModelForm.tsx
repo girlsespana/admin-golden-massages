@@ -1,19 +1,17 @@
 import {FC} from 'react'
 import {Form, Formik, useFormikContext} from 'formik'
 import {useNavigate} from 'react-router-dom'
+import * as Yup from 'yup'
 import NiceModal from '@ebay/nice-modal-react'
 import clsx from 'clsx'
-import {FaArrowLeft, FaStar} from 'react-icons/fa6'
+import {FaArrowLeft} from 'react-icons/fa6'
 import {ImWoman} from 'react-icons/im'
 import {HiPlay, HiStop} from 'react-icons/hi2'
+import {useMutation} from '@apollo/client'
 
 import {
-  ModelAttributes,
   ModelImageNode,
-  ModelLanguages,
   ModelNode,
-  ModelNonVisibleServices,
-  ModelServices,
   ModelsModelEyesColorChoices,
   ModelsModelGenderChoices,
   ModelsModelHairColorChoices,
@@ -21,25 +19,20 @@ import {
   ModelVideoNode,
 } from '@types'
 
-import {Button, Text, TextArea} from '@components'
-import FormField from '@/components/forms/FormField'
-import ToggleSwitchField from '@/components/forms/ToggleSwitchField'
-import Select from '@/components/forms/Select'
-import type {SelectOption} from '@/components/forms/Select/types'
+import {Button} from '@components'
 
-import {nationalityTranslations} from '@/modules/models/constants/nationalityTranslations'
-import {getGenderTranslations} from '@/modules/models/constants/genderTranslations'
-import {getHairColorTranslations} from '@/modules/models/constants/hairColorTranslations'
-import {getEyesColorTranslations} from '@/modules/models/constants/eyesColorTranslations'
-import {getLanguageTranslations} from '@/modules/models/constants/languageTranslations'
-import {getServicesTranslations} from '@/modules/models/constants/servicesTranslations'
-import {getNonVisibleTranslations} from '@/modules/models/constants/nonVisibleTranslations'
-import {getAttributesTranslations} from '@/modules/models/constants/attributesTranslations'
-import ActivateModelModal from '@/modules/models/components/ActivateModelModal'
-import DeactivateModelModal from '@/modules/models/components/DeactivateModelModal'
-import UnsavedChangesBar from '@/modules/models/components/UnsavedChangesBar'
-import ModelImages from './ModelImages'
-import ModelVideos from './ModelVideos'
+import ActivateModelModal from './ActivateModelModal'
+import DeactivateModelModal from './DeactivateModelModal'
+import UnsavedChangesBar from './UnsavedChangesBar'
+import SectionCard from './CreateModelForm/components/SectionCard'
+import BasicInfoSection from './CreateModelForm/components/BasicInfoSection'
+import PhysicalInfoSection from './CreateModelForm/components/PhysicalInfoSection'
+import ServicesSection from './CreateModelForm/components/ServicesSection'
+import ModelMediaSection from './CreateModelForm/components/ModelMediaSection'
+import editModelMutation from '@/modules/models/mutations/editModelMutation'
+import {useToast} from '@/hooks'
+import useImageUploader from '@/hooks/useImageUploader'
+import {ImageFile} from '@/components/forms/types'
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -52,7 +45,7 @@ interface FormValues {
   height: string
   metrics: string
   nationality: string
-  rangeType: string
+  cityId: string
   eyesColor: string
   hairColor: string
   boobs: boolean
@@ -64,6 +57,25 @@ interface FormValues {
   services: string[]
   nonVisibleServices: string[]
   attributes: string[]
+  images: ImageFile[]
+  videos: ImageFile[]
+}
+
+// ─── Components ──────────────────────────────────────────────────────────────
+
+const ModelMediaSectionFormik: FC<{model: ModelNode}> = () => {
+  const {setFieldValue, values} = useFormikContext<FormValues>()
+
+  return (
+    <ModelMediaSection
+      images={values.images}
+      videos={values.videos}
+      onAddImage={(f) => setFieldValue('images', [...values.images, f])}
+      onRemoveImage={(id) => setFieldValue('images', values.images.filter((i) => i.id !== id))}
+      onAddVideo={(f) => setFieldValue('videos', [...values.videos, f])}
+      onRemoveVideo={(id) => setFieldValue('videos', values.videos.filter((v) => v.id !== id))}
+    />
+  )
 }
 
 interface Props {
@@ -72,122 +84,42 @@ interface Props {
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-function enumToOptions<T extends string>(
-  translations: Record<T, string>,
-): SelectOption[] {
-  return (Object.keys(translations) as T[]).map((key) => ({
-    value: key,
-    label: translations[key],
+const modelImagesToImageFiles = (images: ModelImageNode[]): ImageFile[] =>
+  images.map((img) => ({
+    id: img.id,
+    file: null,
+    preview: img.imageUrl ?? '',
   }))
-}
 
-const goldAccent = (
-  <div className="h-px w-full bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-)
+const modelVideosToImageFiles = (videos: ModelVideoNode[]): ImageFile[] =>
+  videos.map((vid) => ({
+    id: vid.id,
+    file: null,
+    preview: vid.videoUrl ?? '',
+  }))
 
-interface SectionCardProps {
-  title: string
-  children: React.ReactNode
-}
-
-const SectionCard: FC<SectionCardProps> = ({ title, children }) => (
-  <div className="bg-card-dark rounded-2xl border border-white/[0.06] overflow-hidden">
-    {goldAccent}
-    <div className="p-6 space-y-5">
-      <p className="text-xs font-semibold uppercase tracking-widest text-neutral-500">
-        {title}
-      </p>
-      {children}
-    </div>
-  </div>
-)
-
-// ─── FormSelect ──────────────────────────────────────────────────────────────
-
-interface FormSelectProps {
-  name: string
-  label: string
-  options: SelectOption[]
-  isMulti?: boolean
-  isSearchable?: boolean
-}
-
-const FormSelectInner: FC<FormSelectProps> = ({
-  name,
-  label,
-  options,
-  isMulti = false,
-  isSearchable = false,
-}) => {
-  const { values, setFieldValue, errors, touched } =
-    useFormikContext<FormValues>()
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const rawValues = values as any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const rawErrors = errors as any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const rawTouched = touched as any
-
-  const fieldValue: unknown = rawValues[name]
-  const errorMsg: string | undefined =
-    rawTouched[name] && rawErrors[name] ? String(rawErrors[name]) : undefined
-
-  const singleSelected =
-    options.find((o) => o.value === fieldValue) ?? null
-
-  return (
-    <div className="space-y-1.5">
-      <label htmlFor={name}>
-        <Text as="span" size="sm" weight="medium">
-          {label}
-        </Text>
-      </label>
-      {isMulti ? (
-        <Select<SelectOption, true>
-          inputId={name}
-          isMulti
-          options={options}
-          isSearchable={isSearchable}
-          value={options.filter(
-            (o) =>
-              Array.isArray(fieldValue) &&
-              (fieldValue as string[]).includes(o.value),
-          )}
-          onChange={(selected) => {
-            void setFieldValue(
-              name,
-              selected ? selected.map((s) => s.value) : [],
-            )
-          }}
-          menuPosition="fixed"
-        />
-      ) : (
-        <Select<SelectOption, false>
-          inputId={name}
-          isMulti={false}
-          options={options}
-          isSearchable={isSearchable}
-          value={singleSelected}
-          onChange={(selected) => {
-            void setFieldValue(name, selected ? selected.value : '')
-          }}
-          menuPosition="fixed"
-        />
-      )}
-      {errorMsg && (
-        <span className="text-xs text-red-400">{errorMsg}</span>
-      )}
-    </div>
-  )
-}
+const validationSchema = Yup.object({
+  name: Yup.string().required('Campo requerido'),
+  age: Yup.string().required('Campo requerido'),
+  gender: Yup.string().required('Campo requerido'),
+  hairColor: Yup.string().required('Campo requerido'),
+  eyesColor: Yup.string().required('Campo requerido'),
+  nationality: Yup.string().required('Campo requerido'),
+  cityId: Yup.string().required('Campo requerido'),
+  height: Yup.string().required('Campo requerido'),
+  weight: Yup.string().required('Campo requerido'),
+  metrics: Yup.string().required('Campo requerido'),
+})
 
 // ─── ModelForm ────────────────────────────────────────────────────────────────
 
-const ModelForm: FC<Props> = ({ model }) => {
+const ModelForm: FC<Props> = ({model}) => {
   const navigate = useNavigate()
-
+  const toast = useToast()
   const cover = model.images?.[0]?.imageUrl
+
+  const [editModel, {loading}] = useMutation(editModelMutation)
+  const {uploadImage, loading: uploading} = useImageUploader()
 
   const initialValues: FormValues = {
     name: model.name ?? '',
@@ -198,7 +130,7 @@ const ModelForm: FC<Props> = ({ model }) => {
     height: model.height != null ? String(model.height) : '',
     metrics: model.metrics ?? '',
     nationality: model.nationality ?? '',
-    rangeType: model.rangeType ?? '',
+    cityId: '',
     eyesColor: model.eyesColor ?? '',
     hairColor: model.hairColor ?? '',
     boobs: model.boobs ?? false,
@@ -208,13 +140,67 @@ const ModelForm: FC<Props> = ({ model }) => {
     party: model.party ?? false,
     languages: (model.languages?.filter(Boolean) as string[]) ?? [],
     services: (model.services?.filter(Boolean) as string[]) ?? [],
-    nonVisibleServices:
-      (model.nonVisibleServices?.filter(Boolean) as string[]) ?? [],
+    nonVisibleServices: (model.nonVisibleServices?.filter(Boolean) as string[]) ?? [],
     attributes: (model.attributes?.filter(Boolean) as string[]) ?? [],
+    images: model.images ? modelImagesToImageFiles(model.images.filter(Boolean) as ModelImageNode[]) : [],
+    videos: model.videos ? modelVideosToImageFiles(model.videos.filter(Boolean) as ModelVideoNode[]) : [],
   }
 
-  const formatDate = (date?: string | null) =>
-    date?.split(/[T ]/)[0] ?? '—'
+  const formatDate = (date?: string | null) => date?.split(/[T ]/)[0] ?? '—'
+
+  const handleSubmit = async (values: FormValues) => {
+    toast('Subiendo archivos...', 'loading', {id: 'edit-model'})
+
+    // Upload new images
+    const imageUrls: string[] = values.images.map((img) => img.preview)
+    for (const img of values.images) {
+      if (img.file) {
+        const result = await uploadImage(img)
+        if (result.url) {
+          const index = imageUrls.findIndex((url) => url === img.preview)
+          if (index !== -1) imageUrls[index] = result.url
+        }
+      }
+    }
+
+    // Upload new videos
+    const videoUrls: string[] = values.videos.map((vid) => vid.preview)
+    for (const vid of values.videos) {
+      if (vid.file) {
+        const result = await uploadImage(vid)
+        if (result.url) {
+          const index = videoUrls.findIndex((url) => url === vid.preview)
+          if (index !== -1) videoUrls[index] = result.url
+        }
+      }
+    }
+
+    toast('Guardando modelo...', 'loading', {id: 'edit-model'})
+
+    await editModel({
+      variables: {
+        input: {
+          ...values,
+          modelId: model.id,
+          age: Number(values.age),
+          height: Number(values.height),
+          weight: Number(values.weight),
+          images: imageUrls,
+          videos: videoUrls,
+        },
+      },
+      onCompleted: () => {
+        toast('Modelo actualizado con éxito', 'success', {id: 'edit-model'})
+      },
+      onError: (err) => {
+        toast(err.message ?? 'Error al actualizar el modelo', 'error', {
+          id: 'edit-model',
+        })
+      },
+    })
+  }
+
+  const isSubmitting = loading || uploading
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
@@ -230,16 +216,12 @@ const ModelForm: FC<Props> = ({ model }) => {
 
       {/* Hero card */}
       <div className="bg-card-dark rounded-2xl border border-white/[0.06] overflow-hidden">
-        {goldAccent}
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
         <div className="p-6 flex gap-6">
           {/* Photo */}
           <div className="shrink-0 w-24 h-24 rounded-xl overflow-hidden">
             {cover ? (
-              <img
-                src={cover}
-                alt={model.name}
-                className="w-full h-full object-cover"
-              />
+              <img src={cover} alt={model.name} className="w-full h-full object-cover" />
             ) : (
               <div className="w-full h-full grid place-items-center bg-gradient-to-br from-neutral-900 to-neutral-950">
                 <ImWoman className="text-3xl text-neutral-700" />
@@ -249,17 +231,7 @@ const ModelForm: FC<Props> = ({ model }) => {
 
           {/* Info */}
           <div className="flex-1 min-w-0 space-y-3">
-            <h1 className="text-2xl font-bold text-white truncate">
-              {model.name}
-            </h1>
-
-            {/*/!* City chip *!/*/}
-            {/*{model.city?.name && (*/}
-            {/*  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs bg-neutral-800 text-neutral-300 border border-white/[0.06]">*/}
-            {/*    <FaCity className="text-primary text-[10px]" />*/}
-            {/*    {model.city.name}*/}
-            {/*  </span>*/}
-            {/*)}*/}
+            <h1 className="text-2xl font-bold text-white truncate">{model.name}</h1>
 
             {/* Status badges */}
             <div className="flex flex-wrap gap-2">
@@ -274,20 +246,12 @@ const ModelForm: FC<Props> = ({ model }) => {
                 <span
                   className={clsx(
                     'w-1.5 h-1.5 rounded-full',
-                    model.isActive
-                      ? 'bg-emerald-400 animate-pulse'
-                      : 'bg-neutral-500',
+                    model.isActive ? 'bg-emerald-400 animate-pulse' : 'bg-neutral-500',
                   )}
                 />
                 {model.isActive ? 'Activa' : 'Inactiva'}
               </span>
-
-              {model.isFeatured && (
-                <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-primary/20 text-primary border border-primary/40">
-                  <FaStar className="text-[9px]" />
-                  Destacada
-                </span>
-              )}
+              
             </div>
 
             {/* Action buttons */}
@@ -295,9 +259,7 @@ const ModelForm: FC<Props> = ({ model }) => {
               <Button
                 color="success"
                 disabled={model.isActive}
-                onClick={() =>
-                  NiceModal.show(ActivateModelModal, { node: model })
-                }
+                onClick={() => NiceModal.show(ActivateModelModal, {node: model})}
               >
                 <HiPlay className="text-base" />
                 Activar
@@ -305,9 +267,7 @@ const ModelForm: FC<Props> = ({ model }) => {
               <Button
                 color="error"
                 disabled={!model.isActive}
-                onClick={() =>
-                  NiceModal.show(DeactivateModelModal, { node: model })
-                }
+                onClick={() => NiceModal.show(DeactivateModelModal, {node: model})}
               >
                 <HiStop className="text-base" />
                 Desactivar
@@ -320,131 +280,30 @@ const ModelForm: FC<Props> = ({ model }) => {
       {/* Formik Form */}
       <Formik<FormValues>
         initialValues={initialValues}
-        onSubmit={(values) => {
-          console.log(values)
-        }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+        enableReinitialize
       >
         <Form className="space-y-6">
           {/* Información básica */}
           <SectionCard title="Información básica">
-            <div className="grid grid-cols-4 gap-4">
-              <FormField
-                name="name"
-                label="Nombre"
-                className="col-span-2"
-              />
-              <FormSelectInner
-                name="gender"
-                label="Género"
-                options={enumToOptions<ModelsModelGenderChoices>(
-                  getGenderTranslations(),
-                )}
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <FormSelectInner
-                name="nationality"
-                label="Nacionalidad"
-                options={enumToOptions<ModelsModelNationalityChoices>(
-                  nationalityTranslations,
-                )}
-                isSearchable
-              />
-              {/*<div className="space-y-1.5">*/}
-              {/*  <Text as="span" size="sm" weight="medium">*/}
-              {/*    Ciudad*/}
-              {/*  </Text>*/}
-              {/*  <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-neutral-800/50 border border-neutral-700/50 text-sm text-neutral-300">*/}
-              {/*    <FaCity className="text-primary shrink-0" />*/}
-              {/*    <span>{model.city?.name ?? '—'}</span>*/}
-              {/*  </div>*/}
-              {/*</div>*/}
-            </div>
-
-            <FormField
-              name="description"
-              label="Descripción"
-              as={TextArea}
-              rows={4}
+            <BasicInfoSection
+              genderOptionsEnum={ModelsModelGenderChoices}
+              nationalityOptionsEnum={ModelsModelNationalityChoices}
             />
           </SectionCard>
 
           {/* Medidas y físico */}
           <SectionCard title="Medidas y físico">
-            <div className="grid grid-cols-4 gap-4">
-              <FormField name="age" label="Edad" type="number" />
-              <FormField
-                name="weight"
-                label="Peso"
-                type="number"
-                placeholder="kg"
-              />
-              <FormField
-                name="height"
-                label="Altura"
-                type="number"
-                placeholder="cm"
-              />
-              <FormField name="metrics" label="Medidas" />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <FormSelectInner
-                name="eyesColor"
-                label="Color de ojos"
-                options={enumToOptions<ModelsModelEyesColorChoices>(
-                  getEyesColorTranslations(),
-                )}
-              />
-              <FormSelectInner
-                name="hairColor"
-                label="Color de cabello"
-                options={enumToOptions<ModelsModelHairColorChoices>(
-                  getHairColorTranslations(),
-                )}
-              />
-            </div>
-
-            <div className="flex flex-wrap gap-6">
-              <ToggleSwitchField name="boobs" label="Pecho operado" />
-              <ToggleSwitchField name="piercings" label="Piercings" />
-              <ToggleSwitchField name="tattoos" label="Tatuajes" />
-              <ToggleSwitchField name="smoker" label="Fumadora" />
-              <ToggleSwitchField name="party" label="Party" />
-            </div>
+            <PhysicalInfoSection
+              eyesColorOptionsEnum={ModelsModelEyesColorChoices}
+              hairColorOptionsEnum={ModelsModelHairColorChoices}
+            />
           </SectionCard>
 
           {/* Idiomas y servicios */}
           <SectionCard title="Idiomas y servicios">
-            <FormSelectInner
-              name="languages"
-              label="Idiomas"
-              options={enumToOptions<ModelLanguages>(getLanguageTranslations())}
-              isMulti
-            />
-            <FormSelectInner
-              name="services"
-              label="Servicios"
-              options={enumToOptions<ModelServices>(getServicesTranslations())}
-              isMulti
-            />
-            <FormSelectInner
-              name="nonVisibleServices"
-              label="Servicios no visibles"
-              options={enumToOptions<ModelNonVisibleServices>(
-                getNonVisibleTranslations(),
-              )}
-              isMulti
-            />
-            <FormSelectInner
-              name="attributes"
-              label="Atributos"
-              options={enumToOptions<ModelAttributes>(
-                getAttributesTranslations(),
-              )}
-              isMulti
-            />
+            <ServicesSection />
           </SectionCard>
 
           {/* Fechas */}
@@ -473,14 +332,15 @@ const ModelForm: FC<Props> = ({ model }) => {
                   {formatDate(model.featuredDate)}
                 </p>
               </div>
-
             </div>
-
           </SectionCard>
 
+          {/* Imágenes y videos */}
+          <ModelMediaSectionFormik model={model} />
+
           <div className="flex justify-end pt-2">
-            <Button type="submit" color="light" disabled={false}>
-              Guardar cambios
+            <Button type="submit" color="primary" disabled={isSubmitting}>
+              {isSubmitting ? 'Guardando...' : 'Guardar cambios'}
             </Button>
           </div>
 
@@ -488,15 +348,7 @@ const ModelForm: FC<Props> = ({ model }) => {
         </Form>
       </Formik>
 
-      <SectionCard title="Imágenes públicas">
-        <ModelImages images={(model.images?.filter(Boolean) as ModelImageNode[]) ?? []} />
-      </SectionCard>
 
-      <SectionCard title="Videos">
-        <ModelVideos
-          videos={(model.videos?.filter(Boolean) as ModelVideoNode[]) ?? []}
-        />
-      </SectionCard>
     </div>
   )
 }
