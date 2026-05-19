@@ -5,18 +5,8 @@ import {enumToOptions} from '@/modules/models/constants/formHelpers'
 import {nationalityTranslations} from '@/modules/models/constants/nationalityTranslations'
 import {getGenderTranslations} from '@/modules/models/constants/genderTranslations'
 import {CITY_OPTIONS} from '@/modules/models/constants/cityOptions'
-import type {
-    ModelsModelGenderChoices,
-    ModelsModelNationalityChoices,
-} from '@types'
-import {FC} from "react";
 
-interface BasicInfoSectionProps {
-    genderOptionsEnum: typeof ModelsModelGenderChoices
-    nationalityOptionsEnum: typeof ModelsModelNationalityChoices
-}
-
-const BasicInfoSection: FC<BasicInfoSectionProps> = ({genderOptionsEnum, nationalityOptionsEnum}) => (
+const BasicInfoSection = () => (
     <>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <FormField
@@ -46,7 +36,6 @@ const BasicInfoSection: FC<BasicInfoSectionProps> = ({genderOptionsEnum, nationa
                 options={CITY_OPTIONS}
                 isSearchable
             />
-            )
 
         </div>
 

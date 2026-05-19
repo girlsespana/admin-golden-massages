@@ -9,15 +9,7 @@ import {ImWoman} from 'react-icons/im'
 import {HiPlay, HiStop} from 'react-icons/hi2'
 import {useMutation} from '@apollo/client'
 
-import {
-  ModelImageNode,
-  ModelNode,
-  ModelsModelEyesColorChoices,
-  ModelsModelGenderChoices,
-  ModelsModelHairColorChoices,
-  ModelsModelNationalityChoices,
-  ModelVideoNode,
-} from '@types'
+import {ModelImageNode, ModelNode, ModelVideoNode,} from '@types'
 
 import {Button} from '@components'
 
@@ -33,6 +25,7 @@ import editModelMutation from '@/modules/models/mutations/editModelMutation'
 import {useToast} from '@/hooks'
 import useImageUploader from '@/hooks/useImageUploader'
 import {ImageFile} from '@/components/forms/types'
+import ModelQuery from "@/modules/models/queries/ModelQuery";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -130,7 +123,7 @@ const ModelForm: FC<Props> = ({model}) => {
     height: model.height != null ? String(model.height) : '',
     metrics: model.metrics ?? '',
     nationality: model.nationality ?? '',
-    cityId: '',
+    cityId: model.city?.id ?? '',
     eyesColor: model.eyesColor ?? '',
     hairColor: model.hairColor ?? '',
     boobs: model.boobs ?? false,
@@ -197,6 +190,7 @@ const ModelForm: FC<Props> = ({model}) => {
           id: 'edit-model',
         })
       },
+      refetchQueries: [ModelQuery]
     })
   }
 
@@ -287,18 +281,12 @@ const ModelForm: FC<Props> = ({model}) => {
         <Form className="space-y-6">
           {/* Información básica */}
           <SectionCard title="Información básica">
-            <BasicInfoSection
-              genderOptionsEnum={ModelsModelGenderChoices}
-              nationalityOptionsEnum={ModelsModelNationalityChoices}
-            />
+            <BasicInfoSection />
           </SectionCard>
 
           {/* Medidas y físico */}
           <SectionCard title="Medidas y físico">
-            <PhysicalInfoSection
-              eyesColorOptionsEnum={ModelsModelEyesColorChoices}
-              hairColorOptionsEnum={ModelsModelHairColorChoices}
-            />
+            <PhysicalInfoSection />
           </SectionCard>
 
           {/* Idiomas y servicios */}

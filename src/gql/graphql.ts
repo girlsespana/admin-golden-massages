@@ -28,17 +28,32 @@ export type Scalars = {
   Int: { input: number; output: number };
   Float: { input: number; output: number };
   /**
+   * The `BigInt` scalar type represents non-fractional whole numeric values.
+   * `BigInt` is not constrained to 32-bit like the `Int` type and thus is a less
+   * compatible type.
+   */
+  BigInt: { input: any; output: any };
+  /**
    * The `DateTime` scalar type represents a DateTime
    * value as specified by
    * [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
    */
   DateTime: { input: any; output: any };
+  /** The `Decimal` scalar type represents a python Decimal. */
+  Decimal: { input: any; output: any };
   /**
    * The `GenericScalar` scalar type represents a generic
    * GraphQL scalar value that could be:
    * String, Boolean, Int, Float, List or Object.
    */
   GenericScalar: { input: any; output: any };
+  /**
+   * Allows use of a JSON String for input / output from the GraphQL schema.
+   *
+   * Use of this type is *not recommended* as you lose the benefits of having a defined, static
+   * schema (one of the key benefits of GraphQL).
+   */
+  JSONString: { input: any; output: any };
 };
 
 /** An enumeration. */
@@ -74,6 +89,91 @@ export type ChangePasswordPayload = {
   user?: Maybe<UserNode>;
 };
 
+export type CityNode = Node & {
+  __typename?: "CityNode";
+  alternateNames?: Maybe<Scalars["String"]["output"]>;
+  displayName: Scalars["String"]["output"];
+  featureCode?: Maybe<Scalars["String"]["output"]>;
+  geonameId?: Maybe<Scalars["Int"]["output"]>;
+  /** The ID of the object */
+  id: Scalars["ID"]["output"];
+  latitude?: Maybe<Scalars["Decimal"]["output"]>;
+  longitude?: Maybe<Scalars["Decimal"]["output"]>;
+  models: ModelNodeConnection;
+  name: Scalars["String"]["output"];
+  nameAscii: Scalars["String"]["output"];
+  population?: Maybe<Scalars["BigInt"]["output"]>;
+  region?: Maybe<RegionNode>;
+  searchNames: Scalars["String"]["output"];
+  slug: Scalars["String"]["output"];
+  timezone?: Maybe<Scalars["String"]["output"]>;
+  translations: Scalars["JSONString"]["output"];
+};
+
+export type CityNodeModelsArgs = {
+  activationDate_Gt?: InputMaybe<Scalars["DateTime"]["input"]>;
+  activationDate_Gte?: InputMaybe<Scalars["DateTime"]["input"]>;
+  activationDate_Lt?: InputMaybe<Scalars["DateTime"]["input"]>;
+  activationDate_Lte?: InputMaybe<Scalars["DateTime"]["input"]>;
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  age_Gte?: InputMaybe<Scalars["Int"]["input"]>;
+  age_Lte?: InputMaybe<Scalars["Int"]["input"]>;
+  attributes?: InputMaybe<Scalars["String"]["input"]>;
+  before?: InputMaybe<Scalars["String"]["input"]>;
+  boobs?: InputMaybe<Scalars["Boolean"]["input"]>;
+  city?: InputMaybe<Scalars["ID"]["input"]>;
+  createdAt_Gt?: InputMaybe<Scalars["DateTime"]["input"]>;
+  createdAt_Gte?: InputMaybe<Scalars["DateTime"]["input"]>;
+  createdAt_Lt?: InputMaybe<Scalars["DateTime"]["input"]>;
+  createdAt_Lte?: InputMaybe<Scalars["DateTime"]["input"]>;
+  eyesColor?: InputMaybe<ModelsModelEyesColorChoices>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
+  gender?: InputMaybe<ModelsModelGenderChoices>;
+  globalSearch?: InputMaybe<Scalars["String"]["input"]>;
+  hairColor?: InputMaybe<ModelsModelHairColorChoices>;
+  hasVideos?: InputMaybe<Scalars["Boolean"]["input"]>;
+  id?: InputMaybe<Scalars["String"]["input"]>;
+  isActive?: InputMaybe<Scalars["Boolean"]["input"]>;
+  isFeatured?: InputMaybe<Scalars["Boolean"]["input"]>;
+  languages?: InputMaybe<Scalars["String"]["input"]>;
+  last?: InputMaybe<Scalars["Int"]["input"]>;
+  name_Icontains?: InputMaybe<Scalars["String"]["input"]>;
+  nationality?: InputMaybe<ModelsModelNationalityChoices>;
+  nonVisibleServices?: InputMaybe<Scalars["String"]["input"]>;
+  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  orderBy?: InputMaybe<Scalars["String"]["input"]>;
+  party?: InputMaybe<Scalars["Boolean"]["input"]>;
+  piercings?: InputMaybe<Scalars["Boolean"]["input"]>;
+  rangeType?: InputMaybe<ModelsModelRangeTypeChoices>;
+  service_Modes?: InputMaybe<Scalars["String"]["input"]>;
+  services?: InputMaybe<Scalars["String"]["input"]>;
+  smoker?: InputMaybe<Scalars["Boolean"]["input"]>;
+  tattoos?: InputMaybe<Scalars["Boolean"]["input"]>;
+  updatedAt_Gt?: InputMaybe<Scalars["DateTime"]["input"]>;
+  updatedAt_Gte?: InputMaybe<Scalars["DateTime"]["input"]>;
+  updatedAt_Lt?: InputMaybe<Scalars["DateTime"]["input"]>;
+  updatedAt_Lte?: InputMaybe<Scalars["DateTime"]["input"]>;
+  user_Id?: InputMaybe<Scalars["String"]["input"]>;
+  user_Type?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type CityNodeConnection = {
+  __typename?: "CityNodeConnection";
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<CityNodeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+};
+
+/** A Relay edge containing a `CityNode` and its cursor. */
+export type CityNodeEdge = {
+  __typename?: "CityNodeEdge";
+  /** A cursor for use in pagination */
+  cursor: Scalars["String"]["output"];
+  /** The item at the end of the edge */
+  node?: Maybe<CityNode>;
+};
+
 export type CreateModelInput = {
   age: Scalars["Int"]["input"];
   attributes: Array<InputMaybe<ModelAttributes>>;
@@ -94,6 +194,7 @@ export type CreateModelInput = {
   party: Scalars["Boolean"]["input"];
   piercings: Scalars["Boolean"]["input"];
   services: Array<InputMaybe<ModelServices>>;
+  smoker: Scalars["Boolean"]["input"];
   tattoos: Scalars["Boolean"]["input"];
   videos: Array<InputMaybe<Scalars["String"]["input"]>>;
   weight: Scalars["Int"]["input"];
@@ -148,6 +249,7 @@ export type EditModelInput = {
   party: Scalars["Boolean"]["input"];
   piercings: Scalars["Boolean"]["input"];
   services: Array<InputMaybe<ModelServices>>;
+  smoker: Scalars["Boolean"]["input"];
   tattoos: Scalars["Boolean"]["input"];
   videos?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
   weight: Scalars["Int"]["input"];
@@ -471,6 +573,7 @@ export type ModelNode = Node & {
   /** Selecciona los atributos disponibles */
   attributes: Array<Maybe<Scalars["String"]["output"]>>;
   boobs: Scalars["Boolean"]["output"];
+  city: CityNode;
   createdAt: Scalars["DateTime"]["output"];
   description?: Maybe<Scalars["String"]["output"]>;
   eyesColor: ModelsModelEyesColorChoices;
@@ -1211,9 +1314,30 @@ export enum PhoneType {
 
 export type Query = {
   __typename?: "Query";
+  cities?: Maybe<CityNodeConnection>;
+  city?: Maybe<CityNode>;
+  femaleCities?: Maybe<Array<Maybe<CityNode>>>;
   me?: Maybe<UserNode>;
   model?: Maybe<ModelNode>;
   models?: Maybe<ModelNodeConnection>;
+  region?: Maybe<RegionNode>;
+  regions?: Maybe<RegionNodeConnection>;
+  transCities?: Maybe<Array<Maybe<CityNode>>>;
+};
+
+export type QueryCitiesArgs = {
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  before?: InputMaybe<Scalars["String"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
+  last?: InputMaybe<Scalars["Int"]["input"]>;
+  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  regionId?: InputMaybe<Scalars["String"]["input"]>;
+  searchNames?: InputMaybe<Scalars["String"]["input"]>;
+  searchNames_Icontains?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type QueryCityArgs = {
+  id: Scalars["ID"]["input"];
 };
 
 export type QueryModelArgs = {
@@ -1267,11 +1391,68 @@ export type QueryModelsArgs = {
   user_Type?: InputMaybe<Scalars["String"]["input"]>;
 };
 
+export type QueryRegionArgs = {
+  id: Scalars["ID"]["input"];
+};
+
+export type QueryRegionsArgs = {
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  before?: InputMaybe<Scalars["String"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
+  last?: InputMaybe<Scalars["Int"]["input"]>;
+  name?: InputMaybe<Scalars["String"]["input"]>;
+  name_Icontains?: InputMaybe<Scalars["String"]["input"]>;
+  offset?: InputMaybe<Scalars["Int"]["input"]>;
+};
+
 export type Refresh = {
   __typename?: "Refresh";
   payload: Scalars["GenericScalar"]["output"];
   refreshExpiresIn: Scalars["Int"]["output"];
   token: Scalars["String"]["output"];
+};
+
+export type RegionNode = Node & {
+  __typename?: "RegionNode";
+  alternateNames?: Maybe<Scalars["String"]["output"]>;
+  citySet: CityNodeConnection;
+  displayName: Scalars["String"]["output"];
+  geonameCode?: Maybe<Scalars["String"]["output"]>;
+  geonameId?: Maybe<Scalars["Int"]["output"]>;
+  /** The ID of the object */
+  id: Scalars["ID"]["output"];
+  name: Scalars["String"]["output"];
+  nameAscii: Scalars["String"]["output"];
+  slug: Scalars["String"]["output"];
+  translations: Scalars["JSONString"]["output"];
+};
+
+export type RegionNodeCitySetArgs = {
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  before?: InputMaybe<Scalars["String"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
+  last?: InputMaybe<Scalars["Int"]["input"]>;
+  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  regionId?: InputMaybe<Scalars["String"]["input"]>;
+  searchNames?: InputMaybe<Scalars["String"]["input"]>;
+  searchNames_Icontains?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type RegionNodeConnection = {
+  __typename?: "RegionNodeConnection";
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<RegionNodeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+};
+
+/** A Relay edge containing a `RegionNode` and its cursor. */
+export type RegionNodeEdge = {
+  __typename?: "RegionNodeEdge";
+  /** A cursor for use in pagination */
+  cursor: Scalars["String"]["output"];
+  /** The item at the end of the edge */
+  node?: Maybe<RegionNode>;
 };
 
 export type UpdateUserInput = {
@@ -1478,6 +1659,50 @@ export type DeactivateModelMutation = {
   } | null;
 };
 
+export type EditModelMutationVariables = Exact<{
+  input: EditModelInput;
+}>;
+
+export type EditModelMutation = {
+  __typename?: "Mutation";
+  editModel?: {
+    __typename?: "EditModelPayload";
+    model?: {
+      __typename?: "ModelNode";
+      id: string;
+      name: string;
+      age: number;
+      height?: number | null;
+      weight?: number | null;
+      metrics?: string | null;
+      description?: string | null;
+      gender: ModelsModelGenderChoices;
+      hairColor: ModelsModelHairColorChoices;
+      eyesColor: ModelsModelEyesColorChoices;
+      nationality: ModelsModelNationalityChoices;
+      boobs: boolean;
+      tattoos: boolean;
+      smoker: boolean;
+      piercings: boolean;
+      party: boolean;
+      languages?: Array<ModelLanguages | null> | null;
+      services?: Array<ModelServices | null> | null;
+      nonVisibleServices: Array<string | null>;
+      attributes: Array<string | null>;
+      images?: Array<{
+        __typename?: "ModelImageNode";
+        id: string;
+        imageUrl?: string | null;
+      } | null> | null;
+      videos?: Array<{
+        __typename?: "ModelVideoNode";
+        id: string;
+        videoUrl?: string | null;
+      } | null> | null;
+    } | null;
+  } | null;
+};
+
 export type ModelQueryVariables = Exact<{
   id: Scalars["ID"]["input"];
 }>;
@@ -1510,6 +1735,7 @@ export type ModelQuery = {
     attributes: Array<string | null>;
     activationDate?: any | null;
     featuredDate?: any | null;
+    city: { __typename?: "CityNode"; id: string; name: string };
     images?: Array<{
       __typename?: "ModelImageNode";
       id: string;
@@ -1962,6 +2188,164 @@ export const DeactivateModelDocument = {
   DeactivateModelMutation,
   DeactivateModelMutationVariables
 >;
+export const EditModelDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "editModel" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "input" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "EditModelInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "editModel" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "input" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "model" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "age" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "height" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "weight" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "metrics" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "description" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "gender" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "hairColor" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "eyesColor" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "nationality" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "boobs" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "tattoos" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "smoker" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "piercings" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "party" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "languages" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "services" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "nonVisibleServices" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "attributes" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "images" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "imageUrl" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "videos" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "videoUrl" },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<EditModelMutation, EditModelMutationVariables>;
 export const ModelDocument = {
   kind: "Document",
   definitions: [
@@ -2031,6 +2415,17 @@ export const ModelDocument = {
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "featuredDate" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "city" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                    ],
+                  },
                 },
                 {
                   kind: "Field",

@@ -28,6 +28,10 @@ const ModelQuery = graphql(`
             attributes
             activationDate
             featuredDate
+            city {
+                id
+                name
+            }
             images {
                 id
                 imageUrl

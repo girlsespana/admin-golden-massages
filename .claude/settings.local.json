@@ -4,7 +4,8 @@
       "Bash(npx tsc *)",
       "Bash(timeout 8 npx vite build --logLevel error)",
       "Bash(npx vite *)",
-      "Bash(xargs ls)"
+      "Bash(xargs ls)",
+      "Bash(node *)"
     ]
   }
 }

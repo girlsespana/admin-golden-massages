@@ -4,18 +4,8 @@ import ToggleSwitchField from '@/components/forms/ToggleSwitchField'
 import {enumToOptions} from '@/modules/models/constants/formHelpers'
 import {getHairColorTranslations} from '@/modules/models/constants/hairColorTranslations'
 import {getEyesColorTranslations} from '@/modules/models/constants/eyesColorTranslations'
-import type {
-  ModelsModelEyesColorChoices,
-  ModelsModelHairColorChoices,
-} from '@types'
-import {FC} from "react";
 
-interface PhysicalInfoSectionProps {
-  eyesColorOptionsEnum: typeof ModelsModelEyesColorChoices
-  hairColorOptionsEnum: typeof ModelsModelHairColorChoices
-}
-
-const PhysicalInfoSection: FC<PhysicalInfoSectionProps> = () => (
+const PhysicalInfoSection = () => (
   <>
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
       <FormField name="age" label="Edad" type="number" placeholder="años" />
