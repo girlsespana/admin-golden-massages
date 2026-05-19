@@ -157,18 +157,12 @@ const CreateModelForm: FC = () => {
         <Form className="space-y-6">
           {/* Información básica */}
           <SectionCard title="Información básica">
-            <BasicInfoSection
-              genderOptionsEnum={ModelsModelGenderChoices}
-              nationalityOptionsEnum={ModelsModelNationalityChoices}
-            />
+            <BasicInfoSection />
           </SectionCard>
 
           {/* Medidas y físico */}
           <SectionCard title="Medidas y físico">
-            <PhysicalInfoSection
-              eyesColorOptionsEnum={ModelsModelEyesColorChoices}
-              hairColorOptionsEnum={ModelsModelHairColorChoices}
-            />
+            <PhysicalInfoSection />
           </SectionCard>
 
           {/* Idiomas y servicios */}
