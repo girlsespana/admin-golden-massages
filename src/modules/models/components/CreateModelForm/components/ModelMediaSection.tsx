@@ -2,6 +2,7 @@ import SectionCard from './SectionCard'
 import MediaDropSection from './MediaDropSection'
 import {BiImageAdd} from 'react-icons/bi'
 import {RiVideoAddFill} from 'react-icons/ri'
+import {ErrorMessage} from 'formik'
 import type {ImageFile} from '@/components/forms/types'
 import {FC} from "react";
 
@@ -12,6 +13,7 @@ interface ModelMediaSectionProps {
   onRemoveImage: (id: string) => void
   onAddVideo: (files: ImageFile[]) => void
   onRemoveVideo: (id: string) => void
+  showImageError?: boolean
 }
 
 const ModelMediaSection: FC<ModelMediaSectionProps> = ({
@@ -21,6 +23,7 @@ const ModelMediaSection: FC<ModelMediaSectionProps> = ({
   onRemoveImage,
   onAddVideo,
   onRemoveVideo,
+  showImageError = false,
 }) => (
   <>
     <SectionCard title="Imágenes públicas">
@@ -31,6 +34,13 @@ const ModelMediaSection: FC<ModelMediaSectionProps> = ({
         accept={{'image/*': []}}
         icon={<BiImageAdd size={40} />}
       />
+      {showImageError && (
+        <div className="mt-2">
+          <ErrorMessage name="images">
+            {(msg) => <span className="text-xs text-red-400">{msg}</span>}
+          </ErrorMessage>
+        </div>
+      )}
     </SectionCard>
 
     <SectionCard title="Videos">

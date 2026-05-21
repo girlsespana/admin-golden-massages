@@ -64,6 +64,7 @@ const ModelMediaSectionFormik: FC = () => {
       onRemoveImage={(id) => setFieldValue('images', values.images.filter((i) => i.id !== id))}
       onAddVideo={(files) => setFieldValue('videos', [...values.videos, ...files])}
       onRemoveVideo={(id) => setFieldValue('videos', values.videos.filter((v) => v.id !== id))}
+      showImageError
     />
   )
 }
