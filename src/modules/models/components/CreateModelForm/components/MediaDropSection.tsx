@@ -7,7 +7,7 @@ import type {ImageFile} from '@/components/forms/types'
 
 interface MediaDropSectionProps {
   items: ImageFile[]
-  onAdd: (file: ImageFile) => void
+  onAdd: (files: ImageFile[]) => void
   onRemove: (id: string) => void
   accept: Record<string, string[]>
   icon: React.ReactNode
@@ -23,9 +23,12 @@ const MediaDropSection: FC<MediaDropSectionProps> = ({
   isVideo = false,
 }) => {
   const onDrop = (acceptedFiles: File[]) => {
-    acceptedFiles.forEach((file) => {
-      onAdd({id: v4(), file, preview: URL.createObjectURL(file)})
-    })
+    const newFiles = acceptedFiles.map((file) => ({
+      id: v4(),
+      file,
+      preview: URL.createObjectURL(file),
+    }))
+    onAdd(newFiles)
   }
 
   const {getRootProps, getInputProps, isDragActive, isDragReject} = useDropzone({

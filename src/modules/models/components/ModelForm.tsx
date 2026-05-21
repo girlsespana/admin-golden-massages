@@ -63,9 +63,9 @@ const ModelMediaSectionFormik: FC<{model: ModelNode}> = () => {
     <ModelMediaSection
       images={values.images}
       videos={values.videos}
-      onAddImage={(f) => setFieldValue('images', [...values.images, f])}
+      onAddImage={(files) => setFieldValue('images', [...values.images, ...files])}
       onRemoveImage={(id) => setFieldValue('images', values.images.filter((i) => i.id !== id))}
-      onAddVideo={(f) => setFieldValue('videos', [...values.videos, f])}
+      onAddVideo={(files) => setFieldValue('videos', [...values.videos, ...files])}
       onRemoveVideo={(id) => setFieldValue('videos', values.videos.filter((v) => v.id !== id))}
     />
   )
@@ -309,17 +309,6 @@ const ModelForm: FC<Props> = ({model}) => {
                 </p>
               </div>
 
-              <div className="space-y-1">
-                <p className="text-neutral-500 text-xs">Fecha destacada</p>
-                <p
-                  className={clsx(
-                    'font-medium text-sm',
-                    model.featuredDate ? 'text-white' : 'text-neutral-500',
-                  )}
-                >
-                  {formatDate(model.featuredDate)}
-                </p>
-              </div>
             </div>
           </SectionCard>
 

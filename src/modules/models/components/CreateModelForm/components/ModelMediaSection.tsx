@@ -8,9 +8,9 @@ import {FC} from "react";
 interface ModelMediaSectionProps {
   images: ImageFile[]
   videos: ImageFile[]
-  onAddImage: (file: ImageFile) => void
+  onAddImage: (files: ImageFile[]) => void
   onRemoveImage: (id: string) => void
-  onAddVideo: (file: ImageFile) => void
+  onAddVideo: (files: ImageFile[]) => void
   onRemoveVideo: (id: string) => void
 }
 

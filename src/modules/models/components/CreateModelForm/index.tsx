@@ -1,6 +1,5 @@
 import type {FC} from 'react'
-import {useState} from 'react'
-import {Form, Formik} from 'formik'
+import {Form, Formik, useFormikContext} from 'formik'
 import {useNavigate} from 'react-router-dom'
 import {useMutation} from '@apollo/client'
 import * as Yup from 'yup'
@@ -42,11 +41,31 @@ interface FormValues {
   boobs: boolean
   piercings: boolean
   tattoos: boolean
+  smoker: boolean
   party: boolean
   languages: string[]
   services: string[]
   nonVisibleServices: string[]
   attributes: string[]
+  images: ImageFile[]
+  videos: ImageFile[]
+}
+
+// ─── Components ──────────────────────────────────────────────────────────────
+
+const ModelMediaSectionFormik: FC = () => {
+  const {setFieldValue, values} = useFormikContext<FormValues>()
+
+  return (
+    <ModelMediaSection
+      images={values.images}
+      videos={values.videos}
+      onAddImage={(files) => setFieldValue('images', [...values.images, ...files])}
+      onRemoveImage={(id) => setFieldValue('images', values.images.filter((i) => i.id !== id))}
+      onAddVideo={(files) => setFieldValue('videos', [...values.videos, ...files])}
+      onRemoveVideo={(id) => setFieldValue('videos', values.videos.filter((v) => v.id !== id))}
+    />
+  )
 }
 
 
@@ -54,9 +73,6 @@ const CreateModelForm: FC = () => {
   const navigate = useNavigate()
   const toast = useToast()
   const {uploadImage, loading: uploading} = useImageUploader()
-
-  const [images, setImages] = useState<ImageFile[]>([])
-  const [videos, setVideos] = useState<ImageFile[]>([])
 
   const [createModel, {loading}] = useMutation(createModelMutation, {
     refetchQueries: [ModelsQuery],
@@ -77,11 +93,14 @@ const CreateModelForm: FC = () => {
     boobs: false,
     piercings: false,
     tattoos: false,
+    smoker: false,
     party: false,
     languages: [],
     services: [],
     nonVisibleServices: [],
     attributes: [],
+    images: [],
+    videos: [],
   }
 
   const validationSchema = Yup.object({
@@ -99,25 +118,29 @@ const CreateModelForm: FC = () => {
     height: Yup.number().required('Requerido').positive().integer(),
     weight: Yup.number().required('Requerido').positive().integer(),
     metrics: Yup.string().required('Requerido'),
+    images: Yup.array()
+      .test('has-images', 'Debes agregar al menos una foto', (value) => (value?.length ?? 0) > 0)
+      .required('Requerido'),
   })
 
   const handleSubmit = async (values: FormValues) => {
     toast('Subiendo imágenes...', 'loading', {id: 'create-model'})
 
     const imageUrls: string[] = []
-    for (const img of images) {
+    for (const img of values.images) {
       const result = await uploadImage(img)
       if (result.url) imageUrls.push(result.url)
     }
 
     const videoUrls: string[] = []
-    for (const vid of videos) {
+    for (const vid of values.videos) {
       const result = await uploadImage(vid)
       if (result.url) videoUrls.push(result.url)
     }
 
     if (imageUrls.length === 0) {
       toast('Debes agregar al menos una foto para crear la modelo', 'error', {id: 'create-model'})
+      return
     }
 
     toast('Guardando modelo...', 'loading', {id: 'create-model'})
@@ -170,6 +193,9 @@ const CreateModelForm: FC = () => {
             <ServicesSection />
           </SectionCard>
 
+          {/* Imágenes y videos */}
+          <ModelMediaSectionFormik />
+
           {/* Submit */}
           <div className="flex justify-end">
             <Button type="submit" disabled={isSubmitting}>
@@ -180,16 +206,6 @@ const CreateModelForm: FC = () => {
           <UnsavedChangesBar submitLabel="Crear modelo" showDiscard={false} />
         </Form>
       </Formik>
-
-      {/* Imágenes y videos (fuera del form para no bloquear submit) */}
-      <ModelMediaSection
-        images={images}
-        videos={videos}
-        onAddImage={(f) => setImages((prev) => [...prev, f])}
-        onRemoveImage={(id) => setImages((prev) => prev.filter((i) => i.id !== id))}
-        onAddVideo={(f) => setVideos((prev) => [...prev, f])}
-        onRemoveVideo={(id) => setVideos((prev) => prev.filter((v) => v.id !== id))}
-      />
     </div>
   )
 }
