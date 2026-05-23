@@ -26,7 +26,7 @@ const ModelMediaSection: FC<ModelMediaSectionProps> = ({
   showImageError = false,
 }) => (
   <>
-    <SectionCard title="Imágenes públicas">
+    <SectionCard title="Imágenes">
       <MediaDropSection
         items={images}
         onAdd={onAddImage}

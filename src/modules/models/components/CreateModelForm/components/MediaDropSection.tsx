@@ -38,11 +38,11 @@ const MediaDropSection: FC<MediaDropSectionProps> = ({
   })
 
   return (
-    <div className="grid grid-cols-3 md:grid-cols-5 xl:grid-cols-8 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
       <div
         {...getRootProps()}
         className={clsx([
-          'bg-neutral-900 rounded-xl w-full aspect-[3/4] flex items-center justify-center',
+          'bg-neutral-900 rounded-xl w-full aspect-[9/16] flex items-center justify-center',
           'border-2 border-dashed transition-all cursor-pointer',
           isDragReject ? 'border-red-500' : isDragActive ? 'border-primary' : 'border-neutral-700',
         ])}
@@ -54,7 +54,7 @@ const MediaDropSection: FC<MediaDropSectionProps> = ({
       {items.map((item) => (
         <div
           key={item.id}
-          className="relative group w-full aspect-[3/4] rounded-xl overflow-hidden"
+          className="relative group w-full aspect-[9/16] rounded-xl overflow-hidden"
         >
           {isVideo ? (
             <video src={item.preview} className="w-full h-full object-cover" controls />
