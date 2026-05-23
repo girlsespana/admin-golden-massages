@@ -1,20 +1,18 @@
-import { useState } from 'react'
-import { useRecoilState } from 'recoil'
-import { useSearchParams } from 'react-router-dom'
-import { Link } from 'react-router-dom'
-import { HiFilter } from 'react-icons/hi'
-import { HiPlus } from 'react-icons/hi2'
-import { RxCaretDown, RxCaretUp } from 'react-icons/rx'
-import { IoClose } from 'react-icons/io5'
+import {useState} from 'react'
+import {useRecoilState} from 'recoil'
+import {Link, useSearchParams} from 'react-router-dom'
+import {HiFilter} from 'react-icons/hi'
+import {HiPlus} from 'react-icons/hi2'
+import {RxCaretDown, RxCaretUp} from 'react-icons/rx'
+import {IoClose} from 'react-icons/io5'
 import clsx from 'clsx'
-import { Button } from '@components'
+import {Button} from '@components'
 import showTableFiltersState from '@dash-lay/atoms/showTableFiltersState'
 import TableRefetchBtn from '@/components/tables/TableRefetchBtn'
 import ModelsGrid from '@/modules/models/components/ModelsGrid'
 import SearchByIDFilter from '@/modules/models/components/forms/SearchByIDFilter'
 import SearchByNameFilter from '@/modules/models/components/forms/SearchByNameFilter'
 import ActiveSelectFilter from '@/modules/models/components/forms/ActiveSelectFilter'
-import VerifiedFilter from '@/modules/models/components/forms/VerifiedFilter'
 
 const FILTER_PARAMS = ['id', 'name_Icontains', 'isActive', 'isVerified']
 
@@ -108,10 +106,6 @@ const HomePage = () => {
                     <div>
                       <FilterLabel>Estado</FilterLabel>
                       <ActiveSelectFilter />
-                    </div>
-                    <div>
-                      <FilterLabel>Verificación</FilterLabel>
-                      <VerifiedFilter />
                     </div>
                   </div>
 

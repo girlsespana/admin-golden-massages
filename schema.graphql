@@ -71,42 +71,9 @@ type CityNode implements Node {
     first: Int
     last: Int
     name_Icontains: String
-    age_Gte: Int
-    age_Lte: Int
-    hairColor: ModelsModelHairColorChoices
-    eyesColor: ModelsModelEyesColorChoices
-    nationality: ModelsModelNationalityChoices
-    city: ID
-    boobs: Boolean
-    tattoos: Boolean
-    smoker: Boolean
-    piercings: Boolean
-    party: Boolean
     isActive: Boolean
-    activationDate_Gt: DateTime
-    activationDate_Gte: DateTime
-    activationDate_Lt: DateTime
-    activationDate_Lte: DateTime
-    createdAt_Gt: DateTime
-    createdAt_Gte: DateTime
-    createdAt_Lt: DateTime
-    createdAt_Lte: DateTime
-    updatedAt_Gt: DateTime
-    updatedAt_Gte: DateTime
-    updatedAt_Lt: DateTime
-    updatedAt_Lte: DateTime
-    gender: ModelsModelGenderChoices
-    rangeType: ModelsModelRangeTypeChoices
-    isFeatured: Boolean
     id: String
     user_Id: String
-    user_Type: String
-    languages: String
-    service_Modes: String
-    services: String
-    nonVisibleServices: String
-    attributes: String
-    hasVideos: Boolean
     globalSearch: String
 
     """Ordering"""
@@ -1528,42 +1495,9 @@ type Query {
     first: Int
     last: Int
     name_Icontains: String
-    age_Gte: Int
-    age_Lte: Int
-    hairColor: ModelsModelHairColorChoices
-    eyesColor: ModelsModelEyesColorChoices
-    nationality: ModelsModelNationalityChoices
-    city: ID
-    boobs: Boolean
-    tattoos: Boolean
-    smoker: Boolean
-    piercings: Boolean
-    party: Boolean
     isActive: Boolean
-    activationDate_Gt: DateTime
-    activationDate_Gte: DateTime
-    activationDate_Lt: DateTime
-    activationDate_Lte: DateTime
-    createdAt_Gt: DateTime
-    createdAt_Gte: DateTime
-    createdAt_Lt: DateTime
-    createdAt_Lte: DateTime
-    updatedAt_Gt: DateTime
-    updatedAt_Gte: DateTime
-    updatedAt_Lt: DateTime
-    updatedAt_Lte: DateTime
-    gender: ModelsModelGenderChoices
-    rangeType: ModelsModelRangeTypeChoices
-    isFeatured: Boolean
     id: String
     user_Id: String
-    user_Type: String
-    languages: String
-    service_Modes: String
-    services: String
-    nonVisibleServices: String
-    attributes: String
-    hasVideos: Boolean
     globalSearch: String
 
     """Ordering"""
@@ -1647,42 +1581,9 @@ type UserNode implements Node {
     first: Int
     last: Int
     name_Icontains: String
-    age_Gte: Int
-    age_Lte: Int
-    hairColor: ModelsModelHairColorChoices
-    eyesColor: ModelsModelEyesColorChoices
-    nationality: ModelsModelNationalityChoices
-    city: ID
-    boobs: Boolean
-    tattoos: Boolean
-    smoker: Boolean
-    piercings: Boolean
-    party: Boolean
     isActive: Boolean
-    activationDate_Gt: DateTime
-    activationDate_Gte: DateTime
-    activationDate_Lt: DateTime
-    activationDate_Lte: DateTime
-    createdAt_Gt: DateTime
-    createdAt_Gte: DateTime
-    createdAt_Lt: DateTime
-    createdAt_Lte: DateTime
-    updatedAt_Gt: DateTime
-    updatedAt_Gte: DateTime
-    updatedAt_Lt: DateTime
-    updatedAt_Lte: DateTime
-    gender: ModelsModelGenderChoices
-    rangeType: ModelsModelRangeTypeChoices
-    isFeatured: Boolean
     id: String
     user_Id: String
-    user_Type: String
-    languages: String
-    service_Modes: String
-    services: String
-    nonVisibleServices: String
-    attributes: String
-    hasVideos: Boolean
     globalSearch: String
 
     """Ordering"""

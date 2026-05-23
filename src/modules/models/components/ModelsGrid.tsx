@@ -40,7 +40,7 @@ const ModelsGrid = () => {
   useEffect(() => {
     if (searchParamsLoaded) {
       const cleaned = cleanVariables(allVariables)
-      if (called) refetch(cleaned)
+      if (called)  refetch(cleaned)
       else fetch({variables: cleaned})
     }
   }, [searchParamsLoaded, allVariables, fetch, refetch, called])

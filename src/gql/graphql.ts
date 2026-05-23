@@ -111,50 +111,17 @@ export type CityNode = Node & {
 };
 
 export type CityNodeModelsArgs = {
-  activationDate_Gt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  activationDate_Gte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  activationDate_Lt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  activationDate_Lte?: InputMaybe<Scalars["DateTime"]["input"]>;
   after?: InputMaybe<Scalars["String"]["input"]>;
-  age_Gte?: InputMaybe<Scalars["Int"]["input"]>;
-  age_Lte?: InputMaybe<Scalars["Int"]["input"]>;
-  attributes?: InputMaybe<Scalars["String"]["input"]>;
   before?: InputMaybe<Scalars["String"]["input"]>;
-  boobs?: InputMaybe<Scalars["Boolean"]["input"]>;
-  city?: InputMaybe<Scalars["ID"]["input"]>;
-  createdAt_Gt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  createdAt_Gte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  createdAt_Lt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  createdAt_Lte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  eyesColor?: InputMaybe<ModelsModelEyesColorChoices>;
   first?: InputMaybe<Scalars["Int"]["input"]>;
-  gender?: InputMaybe<ModelsModelGenderChoices>;
   globalSearch?: InputMaybe<Scalars["String"]["input"]>;
-  hairColor?: InputMaybe<ModelsModelHairColorChoices>;
-  hasVideos?: InputMaybe<Scalars["Boolean"]["input"]>;
   id?: InputMaybe<Scalars["String"]["input"]>;
   isActive?: InputMaybe<Scalars["Boolean"]["input"]>;
-  isFeatured?: InputMaybe<Scalars["Boolean"]["input"]>;
-  languages?: InputMaybe<Scalars["String"]["input"]>;
   last?: InputMaybe<Scalars["Int"]["input"]>;
   name_Icontains?: InputMaybe<Scalars["String"]["input"]>;
-  nationality?: InputMaybe<ModelsModelNationalityChoices>;
-  nonVisibleServices?: InputMaybe<Scalars["String"]["input"]>;
   offset?: InputMaybe<Scalars["Int"]["input"]>;
   orderBy?: InputMaybe<Scalars["String"]["input"]>;
-  party?: InputMaybe<Scalars["Boolean"]["input"]>;
-  piercings?: InputMaybe<Scalars["Boolean"]["input"]>;
-  rangeType?: InputMaybe<ModelsModelRangeTypeChoices>;
-  service_Modes?: InputMaybe<Scalars["String"]["input"]>;
-  services?: InputMaybe<Scalars["String"]["input"]>;
-  smoker?: InputMaybe<Scalars["Boolean"]["input"]>;
-  tattoos?: InputMaybe<Scalars["Boolean"]["input"]>;
-  updatedAt_Gt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  updatedAt_Gte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  updatedAt_Lt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  updatedAt_Lte?: InputMaybe<Scalars["DateTime"]["input"]>;
   user_Id?: InputMaybe<Scalars["String"]["input"]>;
-  user_Type?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type CityNodeConnection = {
@@ -1345,50 +1312,17 @@ export type QueryModelArgs = {
 };
 
 export type QueryModelsArgs = {
-  activationDate_Gt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  activationDate_Gte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  activationDate_Lt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  activationDate_Lte?: InputMaybe<Scalars["DateTime"]["input"]>;
   after?: InputMaybe<Scalars["String"]["input"]>;
-  age_Gte?: InputMaybe<Scalars["Int"]["input"]>;
-  age_Lte?: InputMaybe<Scalars["Int"]["input"]>;
-  attributes?: InputMaybe<Scalars["String"]["input"]>;
   before?: InputMaybe<Scalars["String"]["input"]>;
-  boobs?: InputMaybe<Scalars["Boolean"]["input"]>;
-  city?: InputMaybe<Scalars["ID"]["input"]>;
-  createdAt_Gt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  createdAt_Gte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  createdAt_Lt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  createdAt_Lte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  eyesColor?: InputMaybe<ModelsModelEyesColorChoices>;
   first?: InputMaybe<Scalars["Int"]["input"]>;
-  gender?: InputMaybe<ModelsModelGenderChoices>;
   globalSearch?: InputMaybe<Scalars["String"]["input"]>;
-  hairColor?: InputMaybe<ModelsModelHairColorChoices>;
-  hasVideos?: InputMaybe<Scalars["Boolean"]["input"]>;
   id?: InputMaybe<Scalars["String"]["input"]>;
   isActive?: InputMaybe<Scalars["Boolean"]["input"]>;
-  isFeatured?: InputMaybe<Scalars["Boolean"]["input"]>;
-  languages?: InputMaybe<Scalars["String"]["input"]>;
   last?: InputMaybe<Scalars["Int"]["input"]>;
   name_Icontains?: InputMaybe<Scalars["String"]["input"]>;
-  nationality?: InputMaybe<ModelsModelNationalityChoices>;
-  nonVisibleServices?: InputMaybe<Scalars["String"]["input"]>;
   offset?: InputMaybe<Scalars["Int"]["input"]>;
   orderBy?: InputMaybe<Scalars["String"]["input"]>;
-  party?: InputMaybe<Scalars["Boolean"]["input"]>;
-  piercings?: InputMaybe<Scalars["Boolean"]["input"]>;
-  rangeType?: InputMaybe<ModelsModelRangeTypeChoices>;
-  service_Modes?: InputMaybe<Scalars["String"]["input"]>;
-  services?: InputMaybe<Scalars["String"]["input"]>;
-  smoker?: InputMaybe<Scalars["Boolean"]["input"]>;
-  tattoos?: InputMaybe<Scalars["Boolean"]["input"]>;
-  updatedAt_Gt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  updatedAt_Gte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  updatedAt_Lt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  updatedAt_Lte?: InputMaybe<Scalars["DateTime"]["input"]>;
   user_Id?: InputMaybe<Scalars["String"]["input"]>;
-  user_Type?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type QueryRegionArgs = {
@@ -1490,50 +1424,17 @@ export type UserNode = Node & {
 };
 
 export type UserNodeModelsArgs = {
-  activationDate_Gt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  activationDate_Gte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  activationDate_Lt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  activationDate_Lte?: InputMaybe<Scalars["DateTime"]["input"]>;
   after?: InputMaybe<Scalars["String"]["input"]>;
-  age_Gte?: InputMaybe<Scalars["Int"]["input"]>;
-  age_Lte?: InputMaybe<Scalars["Int"]["input"]>;
-  attributes?: InputMaybe<Scalars["String"]["input"]>;
   before?: InputMaybe<Scalars["String"]["input"]>;
-  boobs?: InputMaybe<Scalars["Boolean"]["input"]>;
-  city?: InputMaybe<Scalars["ID"]["input"]>;
-  createdAt_Gt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  createdAt_Gte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  createdAt_Lt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  createdAt_Lte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  eyesColor?: InputMaybe<ModelsModelEyesColorChoices>;
   first?: InputMaybe<Scalars["Int"]["input"]>;
-  gender?: InputMaybe<ModelsModelGenderChoices>;
   globalSearch?: InputMaybe<Scalars["String"]["input"]>;
-  hairColor?: InputMaybe<ModelsModelHairColorChoices>;
-  hasVideos?: InputMaybe<Scalars["Boolean"]["input"]>;
   id?: InputMaybe<Scalars["String"]["input"]>;
   isActive?: InputMaybe<Scalars["Boolean"]["input"]>;
-  isFeatured?: InputMaybe<Scalars["Boolean"]["input"]>;
-  languages?: InputMaybe<Scalars["String"]["input"]>;
   last?: InputMaybe<Scalars["Int"]["input"]>;
   name_Icontains?: InputMaybe<Scalars["String"]["input"]>;
-  nationality?: InputMaybe<ModelsModelNationalityChoices>;
-  nonVisibleServices?: InputMaybe<Scalars["String"]["input"]>;
   offset?: InputMaybe<Scalars["Int"]["input"]>;
   orderBy?: InputMaybe<Scalars["String"]["input"]>;
-  party?: InputMaybe<Scalars["Boolean"]["input"]>;
-  piercings?: InputMaybe<Scalars["Boolean"]["input"]>;
-  rangeType?: InputMaybe<ModelsModelRangeTypeChoices>;
-  service_Modes?: InputMaybe<Scalars["String"]["input"]>;
-  services?: InputMaybe<Scalars["String"]["input"]>;
-  smoker?: InputMaybe<Scalars["Boolean"]["input"]>;
-  tattoos?: InputMaybe<Scalars["Boolean"]["input"]>;
-  updatedAt_Gt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  updatedAt_Gte?: InputMaybe<Scalars["DateTime"]["input"]>;
-  updatedAt_Lt?: InputMaybe<Scalars["DateTime"]["input"]>;
-  updatedAt_Lte?: InputMaybe<Scalars["DateTime"]["input"]>;
   user_Id?: InputMaybe<Scalars["String"]["input"]>;
-  user_Type?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type UserNodePhoneNumbersArgs = {
@@ -1770,7 +1671,6 @@ export type ModelsQueryVariables = Exact<{
   after?: InputMaybe<Scalars["String"]["input"]>;
   isActive?: InputMaybe<Scalars["Boolean"]["input"]>;
   id?: InputMaybe<Scalars["String"]["input"]>;
-  cityId?: InputMaybe<Scalars["ID"]["input"]>;
   name_Icontains?: InputMaybe<Scalars["String"]["input"]>;
 }>;
 
@@ -2556,14 +2456,6 @@ export const ModelsDocument = {
           kind: "VariableDefinition",
           variable: {
             kind: "Variable",
-            name: { kind: "Name", value: "cityId" },
-          },
-          type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
             name: { kind: "Name", value: "name_Icontains" },
           },
           type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
@@ -2606,14 +2498,6 @@ export const ModelsDocument = {
                 value: {
                   kind: "Variable",
                   name: { kind: "Name", value: "id" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "city" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "cityId" },
                 },
               },
               {
