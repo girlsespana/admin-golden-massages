@@ -24,6 +24,7 @@ import ModelMediaSection from './CreateModelForm/components/ModelMediaSection'
 import editModelMutation from '@/modules/models/mutations/editModelMutation'
 import {useToast} from '@/hooks'
 import useImageUploader from '@/hooks/useImageUploader'
+import useVideoUploader from '@/hooks/useVideoUploader'
 import {ImageFile} from '@/components/forms/types'
 import ModelQuery from "@/modules/models/queries/ModelQuery";
 
@@ -112,7 +113,8 @@ const ModelForm: FC<Props> = ({model}) => {
   const cover = model.images?.[0]?.imageUrl
 
   const [editModel, {loading}] = useMutation(editModelMutation)
-  const {uploadImage, loading: uploading} = useImageUploader()
+  const {uploadImage, loading: uploadingImage} = useImageUploader()
+  const {uploadVideo, loading: uploadingVideo} = useVideoUploader()
 
   const initialValues: FormValues = {
     name: model.name ?? '',
@@ -149,6 +151,10 @@ const ModelForm: FC<Props> = ({model}) => {
     for (const img of values.images) {
       if (img.file) {
         const result = await uploadImage(img)
+        if (result.error) {
+          toast('Error al subir una imagen. Por favor intenta nuevamente', 'error', {id: 'edit-model'})
+          return
+        }
         if (result.url) {
           const index = imageUrls.findIndex((url) => url === img.preview)
           if (index !== -1) imageUrls[index] = result.url
@@ -160,7 +166,11 @@ const ModelForm: FC<Props> = ({model}) => {
     const videoUrls: string[] = values.videos.map((vid) => vid.preview)
     for (const vid of values.videos) {
       if (vid.file) {
-        const result = await uploadImage(vid)
+        const result = await uploadVideo(vid)
+        if (result.error) {
+          toast('Error al subir un video. Por favor intenta nuevamente', 'error', {id: 'edit-model'})
+          return
+        }
         if (result.url) {
           const index = videoUrls.findIndex((url) => url === vid.preview)
           if (index !== -1) videoUrls[index] = result.url
@@ -194,7 +204,7 @@ const ModelForm: FC<Props> = ({model}) => {
     })
   }
 
-  const isSubmitting = loading || uploading
+  const isSubmitting = loading || uploadingImage || uploadingVideo
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">

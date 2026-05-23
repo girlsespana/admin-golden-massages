@@ -13,6 +13,7 @@ import {
 
 import {Button} from '@components'
 import useImageUploader from '@/hooks/useImageUploader'
+import useVideoUploader from '@/hooks/useVideoUploader'
 import {useToast} from '@/hooks'
 import createModelMutation from '@/modules/models/mutations/createModelMutation'
 import ModelsQuery from '@/modules/models/queries/ModelsQuery'
@@ -73,7 +74,8 @@ const ModelMediaSectionFormik: FC = () => {
 const CreateModelForm: FC = () => {
   const navigate = useNavigate()
   const toast = useToast()
-  const {uploadImage, loading: uploading} = useImageUploader()
+  const {uploadImage, loading: uploadingImage} = useImageUploader()
+  const {uploadVideo, loading: uploadingVideo} = useVideoUploader()
 
   const [createModel, {loading}] = useMutation(createModelMutation, {
     refetchQueries: [ModelsQuery],
@@ -125,17 +127,27 @@ const CreateModelForm: FC = () => {
   })
 
   const handleSubmit = async (values: FormValues) => {
-    toast('Subiendo imágenes...', 'loading', {id: 'create-model'})
+    toast('Subiendo archivos...', 'loading', {id: 'create-model'})
 
+    // Upload images
     const imageUrls: string[] = []
     for (const img of values.images) {
       const result = await uploadImage(img)
+      if (result.error) {
+        toast('Error al subir una imagen. Por favor intenta nuevamente', 'error', {id: 'create-model'})
+        return
+      }
       if (result.url) imageUrls.push(result.url)
     }
 
+    // Upload videos
     const videoUrls: string[] = []
     for (const vid of values.videos) {
-      const result = await uploadImage(vid)
+      const result = await uploadVideo(vid)
+      if (result.error) {
+        toast('Error al subir un video. Por favor intenta nuevamente', 'error', {id: 'create-model'})
+        return
+      }
       if (result.url) videoUrls.push(result.url)
     }
 
@@ -169,7 +181,7 @@ const CreateModelForm: FC = () => {
     })
   }
 
-  const isSubmitting = loading || uploading
+  const isSubmitting = loading || uploadingImage || uploadingVideo
 
   return (
     <div className="space-y-6">
