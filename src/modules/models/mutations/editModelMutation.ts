@@ -22,8 +22,6 @@ const editModelMutation = gql`
         party
         languages
         services
-        nonVisibleServices
-        attributes
         images {
           id
           imageUrl

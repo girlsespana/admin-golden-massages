@@ -119,8 +119,6 @@ input CreateModelInput {
   description: String
   gender: ModelGender!
   services: [ModelServices]!
-  attributes: [ModelAttributes]!
-  nonVisibleServices: [ModelNonVisibleServices]!
   clientMutationId: String
 }
 
@@ -180,8 +178,6 @@ input EditModelInput {
   description: String
   gender: ModelGender!
   services: [ModelServices]!
-  attributes: [ModelAttributes]!
-  nonVisibleServices: [ModelNonVisibleServices]!
   modelId: String!
   clientMutationId: String
 }
@@ -205,21 +201,6 @@ Use of this type is *not recommended* as you lose the benefits of having a defin
 schema (one of the key benefits of GraphQL).
 """
 scalar JSONString
-
-"""An enumeration."""
-enum ModelAttributes {
-  PORN_STAR
-  MASSEUSE
-  UNIVERSITY_STUDENT
-  WEBCAMER
-  ONLYFANS
-  YOUTUBER
-  STREAMER
-  FANSLY
-  PORNHUB
-  PROFESSIONAL_MODEL
-  ATHLETE
-}
 
 """An enumeration."""
 enum ModelEyesColor {
@@ -533,13 +514,9 @@ type ModelNode implements Node {
   piercings: Boolean!
   party: Boolean!
   services: [ModelServices]
-  nonVisibleServices: [String]!
 
   """Selecciona los modos de servicio disponibles"""
   serviceModes: [String]!
-
-  """Selecciona los atributos disponibles"""
-  attributes: [String]!
   languages: [ModelLanguages]
   isActive: Boolean!
   activationDate: DateTime
@@ -570,36 +547,6 @@ type ModelNodeEdge {
 }
 
 """An enumeration."""
-enum ModelNonVisibleServices {
-  ANAL
-  ANILINGUS
-  ATTENTION_TO_WOMEN
-  COUPLES_SERVICE
-  CUM_KISS
-  DEEP_THROAT
-  DUPLEX_SERVICE
-  EROTIC_MASSAGE
-  EROTIC_SADO
-  EROTIC_SHOWER
-  FACIAL
-  FANTASIES
-  FETISHES
-  FRENCH_KISSING
-  FULL_FRENCH
-  GIRLFRIEND_EXPERIENCE
-  GOLDEN_SHOWER
-  KISSING
-  LESBIAN
-  NATURAL_ORAL
-  PROSTATE_MASSAGE
-  SEX_TOYS
-  SQUIRTING
-  STRAP_ON
-  SWINGERS_CLUB
-  THREESOME
-}
-
-"""An enumeration."""
 enum ModelServices {
   COUPLES_SERVICE
   PARTIES
@@ -619,6 +566,41 @@ enum ModelServices {
   PRIVATE_EVENTS
   SHOPPING
   HIGH_PROFILE_EVENTS
+  ANAL
+  ANILINGUS
+  ATTENTION_TO_WOMEN
+  CUM_KISS
+  DEEP_THROAT
+  DUPLEX_SERVICE
+  EROTIC_MASSAGE
+  EROTIC_SADO
+  EROTIC_SHOWER
+  FACIAL
+  FANTASIES
+  FETISHES
+  FRENCH_KISSING
+  FULL_FRENCH
+  GOLDEN_SHOWER
+  KISSING
+  LESBIAN
+  NATURAL_ORAL
+  PROSTATE_MASSAGE
+  SEX_TOYS
+  SQUIRTING
+  STRAP_ON
+  SWINGERS_CLUB
+  THREESOME
+  PORN_STAR
+  MASSEUSE
+  UNIVERSITY_STUDENT
+  WEBCAMER
+  ONLYFANS
+  YOUTUBER
+  STREAMER
+  FANSLY
+  PORNHUB
+  PROFESSIONAL_MODEL
+  ATHLETE
 }
 
 """An enumeration."""

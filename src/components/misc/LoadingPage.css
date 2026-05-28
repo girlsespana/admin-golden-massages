@@ -185,30 +185,30 @@
 
 .slice:nth-child(1)::before,
 .slice:nth-child(1)::after {
-    background-color: #F1E5AC;
+    background-color: #A64D4D;
 }
 
 .slice:nth-child(2)::before,
 .slice:nth-child(2)::after {
-    background-color: #E8C84A;
+    background-color: #9A4242;
 }
 
 .slice:nth-child(3)::before,
 .slice:nth-child(3)::after {
-    background-color: #D4AF37;
+    background-color: #8B3A3A;
 }
 
 .slice:nth-child(4)::before,
 .slice:nth-child(4)::after {
-    background-color: #CFB53B;
+    background-color: #7D3434;
 }
 
 .slice:nth-child(5)::before,
 .slice:nth-child(5)::after {
-    background-color: #B8960C;
+    background-color: #6B1C23;
 }
 
 .slice:nth-child(6)::before,
 .slice:nth-child(6)::after {
-    background-color: #8A6E2F;
+    background-color: #5A1518;
 }

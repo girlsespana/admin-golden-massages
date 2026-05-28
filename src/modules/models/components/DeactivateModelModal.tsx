@@ -45,8 +45,7 @@ const DeactivateModelModal: FC<Props> = NiceModal.create(({ node }) => {
 
       <Modal.Body className="space-y-4">
         <p className="text-neutral-300">
-          Estás a punto de desactivar a <span className="text-white font-medium">{node.name}</span>{' '}
-          <span className="text-neutral-500">({node.user.name})</span>.
+          Estás a punto de desactivar a <span className="text-white font-medium">{node.name}</span>{' '}.
         </p>
 
         <div className="flex gap-3 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-200 text-sm">

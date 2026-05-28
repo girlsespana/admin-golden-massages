@@ -77,7 +77,7 @@ const LoginForm = () => {
             <div className="flex flex-col items-center gap-3">
               <div className="flex flex-col items-center gap-1">
                 <span className="text-xl font-extrabold tracking-tight uppercase text-white leading-none">
-                  <span className="text-gold-gradient">Golden</span> Masajes
+                  <span className="text-velvet-gradient">Lounge</span> Velvet
                 </span>
                 <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-gray-500">
                   Panel admin

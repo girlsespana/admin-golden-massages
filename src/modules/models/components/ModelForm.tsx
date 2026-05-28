@@ -6,15 +6,15 @@ import NiceModal from '@ebay/nice-modal-react'
 import clsx from 'clsx'
 import {FaArrowLeft} from 'react-icons/fa6'
 import {ImWoman} from 'react-icons/im'
-import {HiPlay, HiStop} from 'react-icons/hi2'
+import {HiPower, HiOutlineTrash} from 'react-icons/hi2'
 import {useMutation} from '@apollo/client'
 
 import {ModelImageNode, ModelNode, ModelVideoNode,} from '@types'
 
 import {Button} from '@components'
 
-import ActivateModelModal from './ActivateModelModal'
-import DeactivateModelModal from './DeactivateModelModal'
+import ToggleModelActivationModal from './ToggleModelActivationModal'
+import DeleteModelModal from './DeleteModelModal'
 import UnsavedChangesBar from './UnsavedChangesBar'
 import SectionCard from './CreateModelForm/components/SectionCard'
 import BasicInfoSection from './CreateModelForm/components/BasicInfoSection'
@@ -49,8 +49,6 @@ interface FormValues {
   party: boolean
   languages: string[]
   services: string[]
-  nonVisibleServices: string[]
-  attributes: string[]
   images: ImageFile[]
   videos: ImageFile[]
 }
@@ -135,8 +133,6 @@ const ModelForm: FC<Props> = ({model}) => {
     party: model.party ?? false,
     languages: (model.languages?.filter(Boolean) as string[]) ?? [],
     services: (model.services?.filter(Boolean) as string[]) ?? [],
-    nonVisibleServices: (model.nonVisibleServices?.filter(Boolean) as string[]) ?? [],
-    attributes: (model.attributes?.filter(Boolean) as string[]) ?? [],
     images: model.images ? modelImagesToImageFiles(model.images.filter(Boolean) as ModelImageNode[]) : [],
     videos: model.videos ? modelVideosToImageFiles(model.videos.filter(Boolean) as ModelVideoNode[]) : [],
   }
@@ -261,20 +257,18 @@ const ModelForm: FC<Props> = ({model}) => {
             {/* Action buttons */}
             <div className="flex flex-wrap gap-2 pt-1">
               <Button
-                color="success"
-                disabled={model.isActive}
-                onClick={() => NiceModal.show(ActivateModelModal, {node: model})}
+                color={model.isActive ? "error" : "success"}
+                onClick={() => NiceModal.show(ToggleModelActivationModal, {node: model})}
               >
-                <HiPlay className="text-base" />
-                Activar
+                <HiPower className="text-base" />
+                {model.isActive ? 'Desactivar' : 'Activar'}
               </Button>
               <Button
-                color="error"
-                disabled={!model.isActive}
-                onClick={() => NiceModal.show(DeactivateModelModal, {node: model})}
+                color="light"
+                onClick={() => NiceModal.show(DeleteModelModal, {node: model})}
               >
-                <HiStop className="text-base" />
-                Desactivar
+                <HiOutlineTrash className="text-base" />
+                Eliminar
               </Button>
             </div>
           </div>

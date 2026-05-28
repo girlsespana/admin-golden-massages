@@ -15,27 +15,27 @@ const DashboardLayout = ({ children }: Props) => {
 
   return (
       <div className="relative w-full h-screen bg-background-dark flex flex-col overflow-hidden">
-        {/* Ambient gold radial glow */}
+        {/* Ambient velvet radial glow */}
         <div className="pointer-events-none absolute inset-0 z-0">
           <div
               className="absolute -top-40 left-1/2 -translate-x-1/2 w-[820px] h-[420px] rounded-full blur-3xl opacity-40"
               style={{
                 background:
-                    'radial-gradient(ellipse, rgba(212,175,55,0.18) 0%, rgba(10,10,11,0) 70%)',
+                    'radial-gradient(ellipse, rgba(139,58,58,0.18) 0%, rgba(10,10,11,0) 70%)',
               }}
           />
           <div
               className="absolute -bottom-32 -right-32 w-[420px] h-[420px] rounded-full blur-3xl opacity-30"
               style={{
                 background:
-                    'radial-gradient(circle, rgba(212,175,55,0.14) 0%, rgba(10,10,11,0) 70%)',
+                    'radial-gradient(circle, rgba(139,58,58,0.14) 0%, rgba(10,10,11,0) 70%)',
               }}
           />
         </div>
 
         {/* Top bar */}
         <header className="relative z-10 shrink-0">
-          {/* Gold accent line */}
+          {/* Velvet accent line */}
           <div className="h-px w-full bg-gradient-to-r from-transparent via-primary/60 to-transparent"/>
 
           <div className="bg-card-dark/80 backdrop-blur-md border-b border-white/[0.06]">
@@ -44,7 +44,7 @@ const DashboardLayout = ({ children }: Props) => {
               <Link to="/" className="flex items-center gap-3 group">
                 <div className="flex flex-col leading-none">
                   <span className="text-base font-extrabold tracking-tight uppercase text-white">
-                    <span className="text-gold-gradient">Golden</span> Masajes
+                    <span className="text-velvet-gradient">Lounge</span> Velvet
                   </span>
                   <span className="text-[9px] font-medium uppercase tracking-[0.3em] text-neutral-500 mt-0.5">
                     Panel admin

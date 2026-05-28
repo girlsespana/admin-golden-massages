@@ -143,7 +143,6 @@ export type CityNodeEdge = {
 
 export type CreateModelInput = {
   age: Scalars["Int"]["input"];
-  attributes: Array<InputMaybe<ModelAttributes>>;
   boobs: Scalars["Boolean"]["input"];
   cityId: Scalars["String"]["input"];
   clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
@@ -157,7 +156,6 @@ export type CreateModelInput = {
   metrics: Scalars["String"]["input"];
   name: Scalars["String"]["input"];
   nationality: ModelNationality;
-  nonVisibleServices: Array<InputMaybe<ModelNonVisibleServices>>;
   party: Scalars["Boolean"]["input"];
   piercings: Scalars["Boolean"]["input"];
   services: Array<InputMaybe<ModelServices>>;
@@ -197,7 +195,6 @@ export type DeleteModelPayload = {
 
 export type EditModelInput = {
   age: Scalars["Int"]["input"];
-  attributes: Array<InputMaybe<ModelAttributes>>;
   boobs: Scalars["Boolean"]["input"];
   cityId: Scalars["String"]["input"];
   clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
@@ -212,7 +209,6 @@ export type EditModelInput = {
   modelId: Scalars["String"]["input"];
   name: Scalars["String"]["input"];
   nationality: ModelNationality;
-  nonVisibleServices: Array<InputMaybe<ModelNonVisibleServices>>;
   party: Scalars["Boolean"]["input"];
   piercings: Scalars["Boolean"]["input"];
   services: Array<InputMaybe<ModelServices>>;
@@ -227,21 +223,6 @@ export type EditModelPayload = {
   clientMutationId?: Maybe<Scalars["String"]["output"]>;
   model?: Maybe<ModelNode>;
 };
-
-/** An enumeration. */
-export enum ModelAttributes {
-  Athlete = "ATHLETE",
-  Fansly = "FANSLY",
-  Masseuse = "MASSEUSE",
-  Onlyfans = "ONLYFANS",
-  Pornhub = "PORNHUB",
-  PornStar = "PORN_STAR",
-  ProfessionalModel = "PROFESSIONAL_MODEL",
-  Streamer = "STREAMER",
-  UniversityStudent = "UNIVERSITY_STUDENT",
-  Webcamer = "WEBCAMER",
-  Youtuber = "YOUTUBER",
-}
 
 /** An enumeration. */
 export enum ModelEyesColor {
@@ -537,8 +518,6 @@ export type ModelNode = Node & {
   __typename?: "ModelNode";
   activationDate?: Maybe<Scalars["DateTime"]["output"]>;
   age: Scalars["Int"]["output"];
-  /** Selecciona los atributos disponibles */
-  attributes: Array<Maybe<Scalars["String"]["output"]>>;
   boobs: Scalars["Boolean"]["output"];
   city: CityNode;
   createdAt: Scalars["DateTime"]["output"];
@@ -558,7 +537,6 @@ export type ModelNode = Node & {
   metrics?: Maybe<Scalars["String"]["output"]>;
   name: Scalars["String"]["output"];
   nationality: ModelsModelNationalityChoices;
-  nonVisibleServices: Array<Maybe<Scalars["String"]["output"]>>;
   party: Scalars["Boolean"]["output"];
   piercings: Scalars["Boolean"]["output"];
   rangeType: ModelsModelRangeTypeChoices;
@@ -591,55 +569,60 @@ export type ModelNodeEdge = {
 };
 
 /** An enumeration. */
-export enum ModelNonVisibleServices {
+export enum ModelServices {
   Anal = "ANAL",
   Anilingus = "ANILINGUS",
+  Athlete = "ATHLETE",
   AttentionToWomen = "ATTENTION_TO_WOMEN",
   CouplesService = "COUPLES_SERVICE",
   CumKiss = "CUM_KISS",
+  Dancing = "DANCING",
   DeepThroat = "DEEP_THROAT",
+  DinnerWithFriends = "DINNER_WITH_FRIENDS",
   DuplexService = "DUPLEX_SERVICE",
   EroticMassage = "EROTIC_MASSAGE",
+  EroticReading = "EROTIC_READING",
   EroticSado = "EROTIC_SADO",
   EroticShower = "EROTIC_SHOWER",
+  EventOutings = "EVENT_OUTINGS",
   Facial = "FACIAL",
+  Fansly = "FANSLY",
   Fantasies = "FANTASIES",
   Fetishes = "FETISHES",
   FrenchKissing = "FRENCH_KISSING",
   FullFrench = "FULL_FRENCH",
   GirlfriendExperience = "GIRLFRIEND_EXPERIENCE",
   GoldenShower = "GOLDEN_SHOWER",
-  Kissing = "KISSING",
-  Lesbian = "LESBIAN",
-  NaturalOral = "NATURAL_ORAL",
-  ProstateMassage = "PROSTATE_MASSAGE",
-  SexToys = "SEX_TOYS",
-  Squirting = "SQUIRTING",
-  StrapOn = "STRAP_ON",
-  SwingersClub = "SWINGERS_CLUB",
-  Threesome = "THREESOME",
-}
-
-/** An enumeration. */
-export enum ModelServices {
-  CouplesService = "COUPLES_SERVICE",
-  Dancing = "DANCING",
-  DinnerWithFriends = "DINNER_WITH_FRIENDS",
-  EroticReading = "EROTIC_READING",
-  EventOutings = "EVENT_OUTINGS",
-  GirlfriendExperience = "GIRLFRIEND_EXPERIENCE",
   GoPartying = "GO_PARTYING",
   GoShopping = "GO_SHOPPING",
   GoToDinner = "GO_TO_DINNER",
   HighProfileEvents = "HIGH_PROFILE_EVENTS",
+  Kissing = "KISSING",
+  Lesbian = "LESBIAN",
+  Masseuse = "MASSEUSE",
+  NaturalOral = "NATURAL_ORAL",
+  Onlyfans = "ONLYFANS",
   Parties = "PARTIES",
+  Pornhub = "PORNHUB",
+  PornStar = "PORN_STAR",
   PrivateEvents = "PRIVATE_EVENTS",
   PrivateParties = "PRIVATE_PARTIES",
+  ProfessionalModel = "PROFESSIONAL_MODEL",
+  ProstateMassage = "PROSTATE_MASSAGE",
   SalsaDancing = "SALSA_DANCING",
+  SexToys = "SEX_TOYS",
   Shopping = "SHOPPING",
+  Squirting = "SQUIRTING",
+  StrapOn = "STRAP_ON",
+  Streamer = "STREAMER",
+  SwingersClub = "SWINGERS_CLUB",
   SwingDancing = "SWING_DANCING",
+  Threesome = "THREESOME",
   Travel = "TRAVEL",
+  UniversityStudent = "UNIVERSITY_STUDENT",
+  Webcamer = "WEBCAMER",
   WeekendGetaway = "WEEKEND_GETAWAY",
+  Youtuber = "YOUTUBER",
 }
 
 export type ModelVideoNode = Node & {
@@ -1560,6 +1543,18 @@ export type DeactivateModelMutation = {
   } | null;
 };
 
+export type DeleteModelMutationVariables = Exact<{
+  modelId: Scalars["String"]["input"];
+}>;
+
+export type DeleteModelMutation = {
+  __typename?: "Mutation";
+  deleteModel?: {
+    __typename?: "DeleteModelPayload";
+    success?: boolean | null;
+  } | null;
+};
+
 export type EditModelMutationVariables = Exact<{
   input: EditModelInput;
 }>;
@@ -1588,8 +1583,6 @@ export type EditModelMutation = {
       party: boolean;
       languages?: Array<ModelLanguages | null> | null;
       services?: Array<ModelServices | null> | null;
-      nonVisibleServices: Array<string | null>;
-      attributes: Array<string | null>;
       images?: Array<{
         __typename?: "ModelImageNode";
         id: string;
@@ -1632,8 +1625,6 @@ export type ModelQuery = {
     description?: string | null;
     isActive: boolean;
     services?: Array<ModelServices | null> | null;
-    nonVisibleServices: Array<string | null>;
-    attributes: Array<string | null>;
     activationDate?: any | null;
     featuredDate?: any | null;
     city: { __typename?: "CityNode"; id: string; name: string };
@@ -2088,6 +2079,66 @@ export const DeactivateModelDocument = {
   DeactivateModelMutation,
   DeactivateModelMutationVariables
 >;
+export const DeleteModelDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "deleteModel" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "modelId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "deleteModel" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: {
+                  kind: "ObjectValue",
+                  fields: [
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "modelId" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "modelId" },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "success" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DeleteModelMutation, DeleteModelMutationVariables>;
 export const EditModelDocument = {
   kind: "Document",
   definitions: [
@@ -2195,14 +2246,6 @@ export const EditModelDocument = {
                       },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "nonVisibleServices" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                      },
-                      {
-                        kind: "Field",
                         name: { kind: "Name", value: "images" },
                         selectionSet: {
                           kind: "SelectionSet",
@@ -2303,11 +2346,6 @@ export const ModelDocument = {
                 { kind: "Field", name: { kind: "Name", value: "description" } },
                 { kind: "Field", name: { kind: "Name", value: "isActive" } },
                 { kind: "Field", name: { kind: "Name", value: "services" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "nonVisibleServices" },
-                },
-                { kind: "Field", name: { kind: "Name", value: "attributes" } },
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "activationDate" },

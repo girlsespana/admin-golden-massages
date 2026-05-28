@@ -24,8 +24,6 @@ const ModelQuery = graphql(`
             description
             isActive
             services
-            nonVisibleServices
-            attributes
             activationDate
             featuredDate
             city {

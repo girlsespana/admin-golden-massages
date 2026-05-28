@@ -1,11 +1,13 @@
 @import "tailwindcss";
 
 /* ============================================
-   GOLDENMASAJES - Design Tokens (Tailwind v4)
+   LOUNGE VELVET - Design Tokens (Tailwind v4)
    ============================================ */
 @theme {
   /* Colors */
-  --color-primary: #D4AF37;
+  --color-primary: #8B3A3A;
+  --color-primary-dark: #6B1C23;
+  --color-primary-light: #A64D4D;
   --color-background-light: #F9FAFB;
   --color-background-dark: #0A0A0B;
   --color-card-dark: #161618;
@@ -18,7 +20,7 @@
 }
 
 /* ============================================
-   GOLDENMASAJES - Dark Theme
+   LOUNGE VELVET - Dark Theme
    ============================================ */
 @layer base {
   body {
@@ -29,26 +31,52 @@
     display: none;
   }
 
-  .gold-gradient-bg {
-    background: radial-gradient(circle at center, rgba(245, 158, 11, 0.15) 0%, rgba(10, 10, 11, 0) 70%);
+  .velvet-gradient-bg {
+    background: radial-gradient(circle at center, rgba(139, 58, 58, 0.15) 0%, rgba(10, 10, 11, 0) 70%);
   }
 
-  /* Gold metallic gradient for text */
-  .text-gold-gradient {
-    background: linear-gradient(to bottom, #CFB53B 0%, #F1E5AC 26%, #D4AF37 45%, #8A6E2F 61%, #D4AF37 100%);
+  /* Velvet gradient for text */
+  .text-velvet-gradient {
+    background: linear-gradient(to bottom, #A64D4D 0%, #8B3A3A 50%, #6B1C23 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Gold metallic gradient for backgrounds */
-  .bg-gold-gradient {
-    background: linear-gradient(to bottom, #CFB53B 0%, #F1E5AC 26%, #D4AF37 45%, #8A6E2F 61%, #D4AF37 100%);
+  /* Velvet gradient for backgrounds */
+  .bg-velvet-gradient {
+    background: linear-gradient(to bottom, #A64D4D 0%, #8B3A3A 50%, #6B1C23 100%);
   }
 
-  /* Gold metallic gradient for backgrounds (diagonal) */
-  .bg-gold-gradient-br {
-    background: linear-gradient(to bottom right, #CFB53B 0%, #F1E5AC 26%, #D4AF37 45%, #8A6E2F 61%, #D4AF37 100%);
+  /* Velvet gradient for backgrounds (diagonal) */
+  .bg-velvet-gradient-br {
+    background: linear-gradient(to bottom right, #A64D4D 0%, #8B3A3A 50%, #6B1C23 100%);
+  }
+
+  /* Velvet shimmer effect for badges */
+  .velvet-badge {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .velvet-badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #8B3A3A, #A64D4D, #6B1C23, #8B3A3A);
+    background-size: 300% 100%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: borderShimmer 3s linear infinite;
+  }
+
+  @keyframes borderShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 
   /* Custom scrollbar */
@@ -62,12 +90,12 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #D4AF37;
+    background: #8B3A3A;
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #CFB53B;
+    background: #A64D4D;
   }
 }
 
@@ -80,5 +108,5 @@
 
 /* Card dark background color */
 .bg-card-dark {
-  background-color: #171717;
+  background-color: #161618;
 }

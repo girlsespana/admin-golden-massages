@@ -1,7 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import clsx from "clsx";
 import {ImWoman} from "react-icons/im";
-import {FaCity} from "react-icons/fa6";
 
 export interface ModelCardNode {
   id: string
@@ -75,24 +74,9 @@ const ModelCard = ({ node }: Props) => {
 
         {/* Bottom info — overlaid on gradient */}
         <div className="absolute inset-x-0 bottom-0 px-3 pb-3 pt-1 space-y-1">
-          <h3 className="text-white font-semibold text-sm leading-tight truncate">
+          <h3 className="text-white font-semibold text-lg leading-tight truncate">
             {node.name}
           </h3>
-          <div className="flex items-center justify-between gap-2">
-            {node.city?.name ? (
-              <span className="flex items-center gap-1 text-[11px] text-neutral-300 truncate">
-                <FaCity className="text-primary/70 text-[9px] shrink-0" />
-                {node.city.name}
-              </span>
-            ) : (
-              <span />
-            )}
-            {node.user?.name && (
-              <span className="text-[11px] text-neutral-500 italic truncate max-w-[55%] text-right">
-                {node.user.name}
-              </span>
-            )}
-          </div>
         </div>
       </div>
     </button>
